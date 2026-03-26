@@ -1,0 +1,20 @@
+# 콘솔 로그 레벨 변경
+logging:
+  level:
+    root: debug
+#spring.application.name=hello-spring
+spring:
+  application:
+    name: tmdb-web
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: TMDB
+    password: TMDB
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+mybatis:
+  config-location: classpath:mybatis-config.xml #설정 파일 위치 지정
+  mapper-locations: classpath:com/ktdsuniversity/edu/**/mapper/*Mapper.xml
