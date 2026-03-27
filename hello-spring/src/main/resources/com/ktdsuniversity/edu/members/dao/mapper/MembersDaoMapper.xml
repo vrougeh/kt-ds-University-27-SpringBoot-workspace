@@ -3,4 +3,29 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.members.dao.MembersDao">
+
+<insert id="insertNewMembers" parameterType="com.ktdsuniversity.edu.members.vo.request.WriteVO">
+INSERT INTO SPRING_BOOT.MEMBERS
+       (EMAIL
+     , NAME
+     , PASSWORD)
+VALUES
+       (#{email}
+     , #{name}
+     , #{password})
+</insert>
+
+
+    
+<select id="selectMembersCount" parameterType="_int" >
+    SELECT COUNT(NAME)
+    FROM MEMBERS
+</select>
+
+<select id="selectMembersList" parameterType="com.ktdsuniversity.edu.members.dao.MembersDao" >
+SELECT EMAIL
+     , NAME
+     , PASSWORD
+  FROM SPRING_BOOT.MEMBERS
+</select>
 </mapper>
