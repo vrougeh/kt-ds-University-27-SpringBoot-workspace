@@ -1,9 +1,7 @@
-package com.ktdsuniversity.edu.movie.vo;
+package com.ktdsuniversity.edu.movie.vo.request;
 
-
-public class MovieVO {
+public class WriteVO {
 	
-	private String movieId;
 	private String posterUrl;
 	private String title;
 	private String movieRating;
@@ -18,12 +16,7 @@ public class MovieVO {
 	private int budget;
 	private int profit;
 	
-	public String getMovieId() {
-		return this.movieId;
-	}
-	public void setMovieId(String movieId) {
-		this.movieId = movieId;
-	}
+	
 	public String getPosterUrl() {
 		return this.posterUrl;
 	}

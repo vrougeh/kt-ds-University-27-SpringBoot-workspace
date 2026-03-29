@@ -4,10 +4,19 @@
 
 <mapper namespace="com.ktdsuniversity.edu.movie.dao.MobieDao">
 
-<insert id="insertNewMovie" parameterType="">
+<insert id="insertNewMovie" parameterType="com.ktdsuniversity.edu.movie.vo.request.WriteVO">
 INSERT INTO TMDB.MOVIE
 (MOVIE_ID, POSTER_URL, TITLE, MOVIE_RATING, OPEN_DATE, OPEN_COUNTRY, RUNNING_TIME, INTRODUCE, SYNOPSIS, ORIGINAL_TITLE, STATE, "LANGUAGE", BUDGET, PROFIT)
 VALUES('', '', '', '', '', '', 0, '', '', '', '', '', 0, 0)
+</insert>
+
+<insert id="selectMovieCount" parameterType="_int">
+SELECT COUNT(MOVIE_ID)
+  FROM TMDB.MOVIE
+</insert>
+
+<insert id="selectMovieList" parameterType="com.ktdsuniversity.edu.movie.vo.MovieVO">
+
 </insert>
 
 </mapper>
