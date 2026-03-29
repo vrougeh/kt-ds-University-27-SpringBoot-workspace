@@ -23,7 +23,7 @@ public class MovieController {
 	
 	@GetMapping("/")
 	public String getMethodName() {
-		return "/";
+		return "/main";
 	}
 	
 	

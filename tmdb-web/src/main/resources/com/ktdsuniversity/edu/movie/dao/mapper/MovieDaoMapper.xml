@@ -6,8 +6,35 @@
 
 <insert id="insertNewMovie" parameterType="com.ktdsuniversity.edu.movie.vo.request.WriteVO">
 INSERT INTO TMDB.MOVIE
-(MOVIE_ID, POSTER_URL, TITLE, MOVIE_RATING, OPEN_DATE, OPEN_COUNTRY, RUNNING_TIME, INTRODUCE, SYNOPSIS, ORIGINAL_TITLE, STATE, "LANGUAGE", BUDGET, PROFIT)
-VALUES('', '', '', '', '', '', 0, '', '', '', '', '', 0, 0)
+     ( MOVIE_ID
+     , POSTER_URL
+     , TITLE
+     , MOVIE_RATING
+     , OPEN_DATE
+     , OPEN_COUNTRY
+     , RUNNING_TIME
+     , INTRODUCE
+     , SYNOPSIS
+     , ORIGINAL_TITLE
+     , MOVIE_STATE
+     , "LANGUAGE"
+     , BUDGET
+     , PROFIT)            
+VALUES
+      ('MV-' || TO_CHAR(SYSDATE, 'YYYYMMDD-') || LPAD(SEQ_MOVIE_PK.NEXTVAL, 6, '0')
+     , #{posterUrl}
+     , #{title}
+     , #{movieRating}
+     , #{openDate}
+     , #{openCountry}
+     , #{runningTime}
+     , #{introduce}
+     , #{synopsis}
+     , #{originalTitle}
+     , #{state}
+     , #{language}
+     , #{budget}
+     , #{profit})
 </insert>
 
 <insert id="selectMovieCount" parameterType="_int">
@@ -16,7 +43,21 @@ SELECT COUNT(MOVIE_ID)
 </insert>
 
 <insert id="selectMovieList" parameterType="com.ktdsuniversity.edu.movie.vo.MovieVO">
-
+       SELECT MOVIE_ID
+            , POSTER_URL
+            , TITLE
+            , MOVIE_RATING
+            , TO_CHAR(OPEN_DATE, 'YYYY-MM-DD HH24:MI:SS') AS OPEN_DATE
+            , OPEN_COUNTRY
+            , RUNNING_TIME
+            , INTRODUCE
+            , SYNOPSIS
+            , ORIGINAL_TITLE
+            , STATE
+            , "LANGUAGE"
+            , BUDGET
+            , PROFIT
+         FROM TMDB.MOVIE
 </insert>
 
 </mapper>
