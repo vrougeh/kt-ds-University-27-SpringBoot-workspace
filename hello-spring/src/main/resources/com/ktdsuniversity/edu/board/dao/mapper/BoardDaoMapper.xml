@@ -45,4 +45,43 @@
       , NULL)
   </insert>
 
+<select id="selectBoardById"
+            resultType="com.ktdsuniversity.edu.board.vo.BoardVO"
+            parameterType="string">
+        SELECT ID
+             , SUBJECT
+             , CONTENT
+             , EMAIL
+             , VIEW_CNT
+             , TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+             , TO_CHAR(MDFY_DT, 'YYYY-MM-DD HH24:MI:SS') AS MDFY_DT
+             , FILE_NAME
+             , ORIGIN_FILE_NAME
+          FROM BOARD
+         WHERE ID = #{_parameter}
+    </select>
+            
+    <update id="updateViewCntIncreaseById"
+            parameterType="string">
+        UPDATE BOARD
+           SET VIEW_CNT = VIEW_CNT + 1
+         WHERE ID = #{_parameter}
+    </update>
+    
+    <delete id="deleteBoardById"
+            parameterType="string">
+        DELETE
+          FROM BOARD
+         WHERE ID = #{_parameter}
+    </delete>
+    
+    <update id="updateBoardById" parameterType="com.ktdsuniversity.edu.board.vo.request.UpdateVO">
+    UPDATE SPRING_BOOT.BOARD
+       SET SUBJECT= #{subject}
+         , CONTENT=#{content}
+         , EMAIL=#{email}
+         , MDFY_DT= SYSDATE
+     WHERE ID=#{id}
+    </update>
+
 </mapper>

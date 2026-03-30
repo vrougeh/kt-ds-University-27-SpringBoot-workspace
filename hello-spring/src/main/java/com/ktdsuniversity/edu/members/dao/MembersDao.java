@@ -16,4 +16,10 @@ public interface MembersDao {
 
 	List<MembersVO> selectMembersList();
 
+	MembersVO selectMembersByEmail(String email);
+
+	int deleteMembersByEmail(String email);
+
+	int updateMembersByEmail(WriteVO writeVO);
+
 }

@@ -28,4 +28,25 @@ SELECT EMAIL
      , PASSWORD
   FROM SPRING_BOOT.MEMBERS
 </select>
+
+<select id="selectMembersByEmail" resultType="com.ktdsuniversity.edu.members.vo.MembersVO" parameterType="string">
+SELECT EMAIL
+     , NAME
+     , PASSWORD
+  FROM SPRING_BOOT.MEMBERS
+ WHERE EMAIL = #{_parameter}
+</select>
+
+<delete id="deleteMembersByEmail" parameterType="string">
+DELETE FROM SPRING_BOOT.MEMBERS
+ WHERE EMAIL= #{_parameter}
+</delete>
+
+<update id="updateMembersByEmail" parameterType="com.ktdsuniversity.edu.members.vo.request.WriteVO">
+UPDATE SPRING_BOOT.MEMBERS
+   SET NAME=#{name}
+     , PASSWORD=#{password}
+WHERE EMAIL=#{email}
+</update>
+
 </mapper>

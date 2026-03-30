@@ -9,6 +9,11 @@ body {
   color: #333;
 }
 
+pre {
+	margin: 0;
+	font-size: 1rem;
+}
+
 /* grid style 시작 */
 div.grid {
   display: grid;
