@@ -10,8 +10,8 @@ body {
 }
 
 pre {
-	margin: 0;
-	font-size: 1rem;
+  margin: 0;
+  font-size: 1rem;
 }
 
 /* grid style 시작 */
@@ -21,6 +21,18 @@ div.grid {
 
 div.grid > div.btn-group {
   grid-column: 1 / -1;
+}
+
+div.grid > div.btn-group a {
+  display: inline-block;
+  padding: 0.4rem 0.625rem;
+  color: #555;
+  text-decoration: none;
+}
+
+div.grid > div.btn-group a:hover {
+  color: #ff2d2d;
+  text-decoration: underline;
 }
 
 div.grid > div.btn-group > div.right-align {
@@ -46,3 +58,34 @@ div.write {
 }
 
 /* 글쓰기 style 끝 */
+
+/* 회원가입 style 시작 */
+div.regist {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
+  row-gap: 0.625rem;
+  align-items: center;
+}
+
+div.member-update {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
+  row-gap: 0.625rem;
+  align-items: center;
+}
+div.member-view {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
+  row-gap: 0.625rem;
+  align-items: center;
+}
+
+/* 회원가입 style 끝 */
+
+/* 게시글 내용 조회 style 시작 */
+div.view {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(9, minmax(1.75rem, auto));
+  row-gap: 0.625rem;
+}
+/* 게시글 내용 조회 style 끝 */

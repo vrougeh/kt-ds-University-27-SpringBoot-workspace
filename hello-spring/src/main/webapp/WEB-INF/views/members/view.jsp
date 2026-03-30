@@ -5,6 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>회원 조회 : 이메일</title>
+            <link rel="stylesheet" type="text/css" href="/css/hello-spring.css" />
     </head>
     <body>
         <h1>회원 조회</h1>
