@@ -14,6 +14,40 @@ pre {
   font-size: 1rem;
 }
 
+/* table grid 시작 */
+table.grid {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 1200px;
+  border: 1px solid #ddd;
+}
+
+table.grid > tbody > tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+table.grid > tbody > tr:hover {
+  background-color: #fafafa;
+}
+
+table.grid > thead > tr {
+  background-color: #fff;
+}
+
+table.grid > thead > tr > th {
+  padding: 0.625rem;
+}
+
+table.grid > thead > tr > th,
+table.grid > tbody > tr > td {
+  border-right: none;
+  padding: 0.625rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+/* table grid 끝 */
+
 /* grid style 시작 */
 div.grid {
   display: grid;

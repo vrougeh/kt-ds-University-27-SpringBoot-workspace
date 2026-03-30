@@ -5,12 +5,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ktdsuniversity.edu.members.vo.MembersVO;
-import com.ktdsuniversity.edu.members.vo.request.WriteVO;
+import com.ktdsuniversity.edu.members.vo.request.RegistVO;
 
 @Mapper
 public interface MembersDao {
 
-	int insertNewMembers(WriteVO writeVO);
+	int insertNewMembers(RegistVO writeVO);
 
 	int selectMembersCount();
 
@@ -20,6 +20,6 @@ public interface MembersDao {
 
 	int deleteMembersByEmail(String email);
 
-	int updateMembersByEmail(WriteVO writeVO);
+	int updateMembersByEmail(RegistVO writeVO);
 
 }

@@ -1,6 +1,6 @@
 package com.ktdsuniversity.edu.members.vo.request;
 
-public class WriteVO {
+public class RegistVO {
 	
 	private String email;
 	private String name;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.ktdsuniversity.edu.members.service.MembersService;
 import com.ktdsuniversity.edu.members.vo.MembersVO;
 import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
-import com.ktdsuniversity.edu.members.vo.request.WriteVO;
+import com.ktdsuniversity.edu.members.vo.request.RegistVO;
 import com.ktdsuniversity.edu.members.vo.response.SearchResultVO;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +24,8 @@ public class MembersController {
 	private MembersService membersService;
 	
 	//회원가입 페이지 엔드포인트
-	@GetMapping("/members/list")
+//	/member ==> 회원들의 목록이 조회되도록 코드를 작성
+	@GetMapping("/member")
 	public String viewListPage(Model model) {
 		SearchResultVO searchResult = this.membersService.findMembers();
 		
@@ -45,11 +46,11 @@ public class MembersController {
 	
 	
 	@PostMapping("/regist")
-	public String doRegistAction(WriteVO writeVO) {
+	public String doRegistAction(RegistVO registVO) {
 		
-		boolean createResult = this.membersService.createNewMembers(writeVO);
+		boolean createResult = this.membersService.createNewMembers(registVO);
 		System.out.println("회원가입 성공?" + createResult);
-		return"redirect:/members/list";
+		return"redirect:/member";
 	}
 	
 	@GetMapping("/member/view/{email}")
@@ -80,15 +81,12 @@ public class MembersController {
 		boolean deleteResult = this.membersService.deleteMembersByEmail(email);
 		return "redirect:/member/list";
 	}
-	
-	
-	
-	
 	/*
 	 * /member/view/사용자아이디 ==> 회원정보 조회 하기
 	 * /member/update/사용자아이디 ==> 회원정보 수정페이지 보기
 	 * /member/update/사용자아이디 ==> 회원정보 수정 하기
 	 * /member/delete?id=사용자아이디 ==> 회원정보 삭제하기
 	 */
+
 
 }

@@ -9,7 +9,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <h1>회원가입</h1>
-    <form method="post" action="/member/regist">
+    <form method="post" action="/regist">
       <div class="grid write">
         <label for="email">이메일</label>
         <input

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.ktdsuniversity.edu.members.dao.MembersDao">
 
-<insert id="insertNewMembers" parameterType="com.ktdsuniversity.edu.members.vo.request.WriteVO">
+<insert id="insertNewMembers" parameterType="com.ktdsuniversity.edu.members.vo.request.RegistVO">
 INSERT INTO SPRING_BOOT.MEMBERS
        (EMAIL
      , NAME
@@ -42,7 +42,7 @@ DELETE FROM SPRING_BOOT.MEMBERS
  WHERE EMAIL= #{_parameter}
 </delete>
 
-<update id="updateMembersByEmail" parameterType="com.ktdsuniversity.edu.members.vo.request.WriteVO">
+<update id="updateMembersByEmail" parameterType="com.ktdsuniversity.edu.members.vo.request.UpdateVO">
 UPDATE SPRING_BOOT.MEMBERS
    SET NAME=#{name}
      , PASSWORD=#{password}
