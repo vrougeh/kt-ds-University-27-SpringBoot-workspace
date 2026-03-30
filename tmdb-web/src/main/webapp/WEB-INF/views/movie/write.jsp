@@ -35,7 +35,7 @@ pageEncoding="UTF-8"%>
           placeholder="관람 등급을 입력하세요. 3자 제한"
         />
 
-        <label for="openDate">오픈 날짜</label>
+        <label for="openDate">개봉 날짜</label>
         <input id="openDate" type="date" name="openDate" />
 
         <label for="openCountry">개봉 국가</label>
@@ -92,20 +92,20 @@ pageEncoding="UTF-8"%>
           placeholder="언어을 입력하세요. 6자 제한"
         />
 
-        <label for="budget">쓴돈</label>
+        <label for="budget">제작비</label>
         <input
           id="budget"
           type="number"
           name="budget"
-          placeholder="쓴돈을 입력하세요."
+          placeholder="제작비를 입력하세요."
         />
 
-        <label for="profit">번돈</label>
+        <label for="profit">수익</label>
         <input
           id="profit"
           type="number"
           name="profit"
-          placeholder="번돈을 입력하세요."
+          placeholder="수익을 입력하세요."
         />
 
         <div class="btn-group">
