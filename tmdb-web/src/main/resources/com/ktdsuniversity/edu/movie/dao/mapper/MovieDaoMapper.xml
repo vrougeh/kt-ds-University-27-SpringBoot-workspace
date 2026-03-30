@@ -2,7 +2,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ktdsuniversity.edu.movie.dao.MobieDao">
+<mapper namespace="com.ktdsuniversity.edu.movie.dao.MovieDao">
 
 <insert id="insertNewMovie" parameterType="com.ktdsuniversity.edu.movie.vo.request.WriteVO">
 INSERT INTO TMDB.MOVIE
@@ -16,8 +16,8 @@ INSERT INTO TMDB.MOVIE
      , INTRODUCE
      , SYNOPSIS
      , ORIGINAL_TITLE
-     , MOVIE_STATE
-     , "LANGUAGE"
+     , STATE
+     , LANGUAGE
      , BUDGET
      , PROFIT)            
 VALUES
@@ -37,12 +37,12 @@ VALUES
      , #{profit})
 </insert>
 
-<insert id="selectMovieCount" parameterType="_int">
+<select id="selectMovieCount" resultType="_int">
 SELECT COUNT(MOVIE_ID)
   FROM TMDB.MOVIE
-</insert>
+</select>
 
-<insert id="selectMovieList" parameterType="com.ktdsuniversity.edu.movie.vo.MovieVO">
+<select id="selectMovieList" parameterType="com.ktdsuniversity.edu.movie.vo.MovieVO">
        SELECT MOVIE_ID
             , POSTER_URL
             , TITLE
@@ -54,10 +54,10 @@ SELECT COUNT(MOVIE_ID)
             , SYNOPSIS
             , ORIGINAL_TITLE
             , STATE
-            , "LANGUAGE"
+            , LANGUAGE
             , BUDGET
             , PROFIT
          FROM TMDB.MOVIE
-</insert>
+</select>
 
 </mapper>

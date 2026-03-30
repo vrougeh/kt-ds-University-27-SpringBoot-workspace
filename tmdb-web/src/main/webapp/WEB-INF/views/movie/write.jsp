@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>write</title>
+    <link rel="stylesheet" type="text/css" href="/css/tmdb" />
   </head>
   <body>
     <h1>영화 등록</h1>
@@ -31,7 +32,7 @@ pageEncoding="UTF-8"%>
           id="movieRating"
           type="text"
           name="movieRating"
-          placeholder="관람 등급을 입력하세요."
+          placeholder="관람 등급을 입력하세요. 3자 제한"
         />
 
         <label for="openDate">오픈 날짜</label>
@@ -42,7 +43,7 @@ pageEncoding="UTF-8"%>
           id="openCountry"
           type="text"
           name="openCountry"
-          placeholder="개봉 국가를 입력하세요."
+          placeholder="개봉 국가를 입력하세요. 2자 제한"
         />
 
         <label for="runningTime">러닝타임</label>
@@ -75,12 +76,12 @@ pageEncoding="UTF-8"%>
           placeholder="오리지널타이틀을 입력하세요."
         />
 
-        <label for="movieState">개봉상태</label>
+        <label for="state">개봉상태</label>
         <input
-          id="movieState"
+          id="state"
           type="text"
-          name="movieState"
-          placeholder="개봉상태를 입력하세요."
+          name="state"
+          placeholder="개봉상태를 입력하세요. 5자 제한"
         />
 
         <label for="language">언어</label>
@@ -88,7 +89,7 @@ pageEncoding="UTF-8"%>
           id="language"
           type="text"
           name="language"
-          placeholder="언어을 입력하세요."
+          placeholder="언어을 입력하세요. 6자 제한"
         />
 
         <label for="budget">쓴돈</label>

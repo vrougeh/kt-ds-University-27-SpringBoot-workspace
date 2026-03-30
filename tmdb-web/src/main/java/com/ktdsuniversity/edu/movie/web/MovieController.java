@@ -38,7 +38,7 @@ public class MovieController {
 		
 		model.addAttribute("searchResult", list);
 		model.addAttribute("searchCount", searchCount);
-		return "movie//list";
+		return "movie/list";
 	}
 	
 	
@@ -48,7 +48,7 @@ public class MovieController {
 	}
 	
 	@PostMapping("/write")
-	public String doWriteAction(WriteVO writeVO) {
+	public String doWriteAction(WriteVO writeVO) {	
 		boolean createResult = this.movieService.createNewMovie(writeVO);
 		
 		return"redirect:/list";

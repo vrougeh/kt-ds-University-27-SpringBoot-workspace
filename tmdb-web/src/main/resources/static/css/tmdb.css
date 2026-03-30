@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #333;
+}
+
+pre {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* table grid 시작 */
+table.grid {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 1200px;
+  border: 1px solid #ddd;
+}
+
+table.grid > tbody > tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+table.grid > tbody > tr:hover {
+  background-color: #fafafa;
+}
+
+table.grid > thead > tr {
+  background-color: #fff;
+}
+
+table.grid > thead > tr > th {
+  padding: 0.625rem;
+}
+
+table.grid > thead > tr > th,
+table.grid > tbody > tr > td {
+  border-right: none;
+  padding: 0.625rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+/* table grid 끝 */
+
+/* grid style 시작 */
+div.grid {
+  display: grid;
+}
+
+div.grid > div.btn-group {
+  grid-column: 1 / -1;
+}
+
+div.grid > div.btn-group a {
+  display: inline-block;
+  padding: 0.4rem 0.625rem;
+  color: #555;
+  text-decoration: none;
+}
+
+div.grid > div.btn-group a:hover {
+  color: #ff2d2d;
+  text-decoration: underline;
+}
+
+div.grid > div.btn-group > div.right-align {
+  text-align: right;
+}
+
+div.grid > label {
+  padding-left: 0.625rem;
+}
+
+div.grid input,
+div.grid button,
+div.grid textarea {
+  padding: 0.625rem;
+}
+/* grid style 끝 */
+
+/* 글쓰기 style 시작 */
+div.write {
+  grid-template-columns: 5rem 1fr;
+  grid-template-rows: 1.75rem 1.75rem 20rem 1fr;
+  row-gap: 0.625rem;
+}
+
+/* 글쓰기 style 끝 */
+
+/* 회원가입 style 시작 */
+div.regist {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
+  row-gap: 0.625rem;
+  align-items: center;
+}
+
+div.member-update {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
+  row-gap: 0.625rem;
+  align-items: center;
+}
+div.member-view {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
+  row-gap: 0.625rem;
+  align-items: center;
+}
+
+/* 회원가입 style 끝 */
+
+/* 게시글 내용 조회 style 시작 */
+div.view {
+  grid-template-columns: 7.5rem 1fr;
+  grid-template-rows: repeat(9, minmax(1.75rem, auto));
+  row-gap: 0.625rem;
+}
+/* 게시글 내용 조회 style 끝 */
