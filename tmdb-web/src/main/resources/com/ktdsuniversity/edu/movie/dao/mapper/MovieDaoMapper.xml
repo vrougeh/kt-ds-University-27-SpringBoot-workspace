@@ -42,7 +42,7 @@ SELECT COUNT(MOVIE_ID)
   FROM TMDB.MOVIE
 </select>
 
-<select id="selectMovieList" parameterType="com.ktdsuniversity.edu.movie.vo.MovieVO">
+<select id="selectMovieList" resultType="com.ktdsuniversity.edu.movie.vo.MovieVO">
        SELECT MOVIE_ID
             , POSTER_URL
             , TITLE
