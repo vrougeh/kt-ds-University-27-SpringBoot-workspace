@@ -12,7 +12,6 @@ import com.ktdsuniversity.edu.movie.service.MovieService;
 import com.ktdsuniversity.edu.movie.vo.MovieVO;
 import com.ktdsuniversity.edu.movie.vo.request.WriteVO;
 import com.ktdsuniversity.edu.movie.vo.response.SearchResultVO;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -50,6 +49,7 @@ public class MovieController {
 	@PostMapping("/write")
 	public String doWriteAction(WriteVO writeVO) {	
 		boolean createResult = this.movieService.createNewMovie(writeVO);
+		System.out.println(createResult);
 		
 		return"redirect:/list";
 	}
