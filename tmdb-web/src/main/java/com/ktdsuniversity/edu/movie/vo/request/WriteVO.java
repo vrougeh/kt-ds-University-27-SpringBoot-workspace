@@ -1,7 +1,12 @@
 package com.ktdsuniversity.edu.movie.vo.request;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class WriteVO {
 	
+	private String movieId;
 	private String posterUrl;
 	private String title;
 	private String movieRating;
@@ -16,7 +21,20 @@ public class WriteVO {
 	private long budget;
 	private long profit;
 	
+	private MultipartFile attachFile;
 	
+	public MultipartFile getAttachFile() {
+		return this.attachFile;
+	}
+	public void setAttachFile(MultipartFile attachFile) {
+		this.attachFile = attachFile;
+	}
+	public String getMovieId() {
+		return this.movieId;
+	}
+	public void setMovieId(String movieId) {
+		this.movieId = movieId;
+	}
 	public String getPosterUrl() {
 		return this.posterUrl;
 	}

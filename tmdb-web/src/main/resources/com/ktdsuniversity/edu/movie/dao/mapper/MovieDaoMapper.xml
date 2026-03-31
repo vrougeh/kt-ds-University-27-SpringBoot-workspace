@@ -43,21 +43,31 @@ SELECT COUNT(MOVIE_ID)
 </select>
 
 <select id="selectMovieList" resultType="com.ktdsuniversity.edu.movie.vo.MovieVO">
-       SELECT MOVIE_ID
-            , POSTER_URL
-            , TITLE
-            , MOVIE_RATING
-            , TO_CHAR(OPEN_DATE, 'YYYY-MM-DD HH24:MI:SS') AS OPEN_DATE
-            , OPEN_COUNTRY
-            , RUNNING_TIME
-            , INTRODUCE
-            , SYNOPSIS
-            , ORIGINAL_TITLE
-            , STATE
-            , LANGUAGE
-            , BUDGET
-            , PROFIT
-         FROM TMDB.MOVIE
+   SELECT M.MOVIE_ID
+        , M.POSTER_URL
+        , M.TITLE
+        , M.MOVIE_RATING
+        , TO_CHAR(M.OPEN_DATE, 'YYYY-MM-DD HH24:MI:SS') AS OPEN_DATE
+        , M.OPEN_COUNTRY
+        , M.RUNNING_TIME
+        , M.INTRODUCE
+        , M.SYNOPSIS
+        , M.ORIGINAL_TITLE
+        , M.STATE
+        , M.LANGUAGE
+        , M.BUDGET
+        , M.PROFIT
+        , F.FILE_NUM
+        , F.FILE_GROUP_ID
+        , F.OBFUSCATE_NAME
+        , F.DISPLAY_NAME
+        , F.EXTEND_NAME
+        , F.FILE_LENGTH
+        , F.FILE_PATH
+     FROM TMDB.MOVIE M
+     LEFT OUTER JOIN FILES F
+       ON M.MOVIE_ID = F.FILE_GROUP_ID 
+
 </select>
 
 </mapper>

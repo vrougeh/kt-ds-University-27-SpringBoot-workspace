@@ -1,5 +1,8 @@
 package com.ktdsuniversity.edu.movie.vo;
 
+import java.util.List;
+
+import com.ktdsuniversity.edu.files.vo.FilesVO;
 
 public class MovieVO {
 	
@@ -17,6 +20,8 @@ public class MovieVO {
 	private String language;
 	private long budget;
 	private long profit;
+	
+	private FilesVO files;
 	
 	public String getMovieId() {
 		return this.movieId;

@@ -18,6 +18,11 @@ pageEncoding="UTF-8"%>
           name="posterUrl"
           placeholder="포스터URL을 입력하세요."
         />
+        
+        <label for="attach-files">포스터 이미지</label>
+        <div id="attach-files" class="attach-files">
+          <input type="file" name="attachFile" />
+        </div>
 
         <label for="title">영화 타이틀</label>
         <input
