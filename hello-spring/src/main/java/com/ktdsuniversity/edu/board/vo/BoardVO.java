@@ -1,5 +1,9 @@
 package com.ktdsuniversity.edu.board.vo;
 
+import java.util.List;
+
+import com.ktdsuniversity.edu.files.vo.FilesVO;
+
 public class BoardVO {
 	
 	private String id;
@@ -12,6 +16,7 @@ public class BoardVO {
 	private String fileName;
 	private String originFileName;
 	
+	private List<FilesVO> files;
 	
 	public String getId() {
 		return this.id;
@@ -68,7 +73,12 @@ public class BoardVO {
 		this.originFileName = originFileName;
 	}
 	
-	
+	public List<FilesVO> getFiles() {
+		return this.files;
+	}
+	public void setFiles(List<FilesVO> files) {
+		this.files = files;
+	}
 	
 
 }

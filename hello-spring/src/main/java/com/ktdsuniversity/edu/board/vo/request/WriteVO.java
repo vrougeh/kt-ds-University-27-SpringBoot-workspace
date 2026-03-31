@@ -1,5 +1,8 @@
 package com.ktdsuniversity.edu.board.vo.request;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 게시글 등록을 위해
@@ -9,9 +12,23 @@ package com.ktdsuniversity.edu.board.vo.request;
  * setter를 이용
  */
 public class WriteVO {
+	
+	private String id;
+	
 	private String subject;
 	private String content;
 	private String email;
+	
+	private List<MultipartFile> attachFile;
+	
+	
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public String getSubject() {
 		return this.subject;
@@ -35,6 +52,14 @@ public class WriteVO {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<MultipartFile> getAttachFile() {
+		return this.attachFile;
+	}
+
+	public void setAttachFile(List<MultipartFile> attachFile) {
+		this.attachFile = attachFile;
 	}
 
 

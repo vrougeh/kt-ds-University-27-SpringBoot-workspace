@@ -89,6 +89,7 @@ public class BoardController {
 	public String doDeleteAction(@RequestParam String id) {
 		
 		boolean deleteResult = this.boardService.deleteBoardByArticleId(id);
+		System.out.println("삭제 결과?"+deleteResult);
 		return "redirect:/";
 		
 	}
