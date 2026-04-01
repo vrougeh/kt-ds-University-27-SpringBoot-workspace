@@ -21,6 +21,21 @@
 		     , #{fileLength}
 		     , #{filePath})
 	</insert>
+	
+<select id="selectFilesByGroupIdAndFileNum" 
+        parameterType="com.ktdsuniversity.edu.files.vo.request.SearchFileVO" 
+        resultType="com.ktdsuniversity.edu.files.vo.response.DownLoadVO">
+    SELECT FILE_NUM
+         , FILE_GROUP_ID
+         , OBFUSCATE_NAME
+         , DISPLAY_NAME
+         , EXTEND_NAME
+         , FILE_LENGTH
+         , FILE_PATH
+      FROM FILES
+     WHERE FILE_GROUP_ID = #{fileGroupId}
+       AND FILE_NUM = #{fileNum}
+</select>
 
 </mapper>
 

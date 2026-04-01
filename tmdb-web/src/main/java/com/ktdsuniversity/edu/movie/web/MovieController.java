@@ -68,6 +68,15 @@ public class MovieController {
 		return "movie/view";
 	}
 	
+	@GetMapping("path")
+	public String getMethodName(@RequestParam String param) {
+		return new String();
+	}
+	
+	
+	
+	
+	
 	@GetMapping("/update/{movieId}")
 	public String viewUpdatePage(@PathVariable String movieId, Model model) {
 		MovieVO data = this.movieService.findMovieByMovieId(movieId);

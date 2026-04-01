@@ -18,7 +18,7 @@
         
         <span>영화 포스터 이미지</span>
         <div>
-        <img alt="이미지가 없습니다." src="${movie.files.filePath}/">
+        <img alt="이미지가 없습니다." src="/file/${movie.files.fileGroupId}/${movie.files.fileNum}">
         </div>
         
         <span>영화 타이틀</span>

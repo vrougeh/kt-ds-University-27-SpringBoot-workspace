@@ -114,7 +114,7 @@ SELECT COUNT(MOVIE_ID)
 INSERT INTO TMDB.MOVIE
        POSTER_URL
 VALUES #{_parameter}
- WHERE MOVIE_ID = #{movie_id}
+ WHERE MOVIE_ID = #{movieId}
 </update>
 
 
