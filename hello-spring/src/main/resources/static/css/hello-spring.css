@@ -8,14 +8,20 @@ body {
   margin: 0;
   color: #333;
 }
+
+pre {
+  margin: 0;
+  font-size: 1rem;
+}
+
 /*list style 시작*/
 ul.vertical-list {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	display: flex;
-	flex-direction: column;
-	gap: 0.625rem
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
 }
 
 /*list style 끝*/
@@ -95,16 +101,31 @@ div.grid textarea {
 /* grid style 끝 */
 
 /* 글쓰기 style 시작 */
-div.write {
+div.write,
+div.update {
   grid-template-columns: 5rem 1fr;
   grid-template-rows: 1.75rem 1.75rem minmax(1.75rem, auto) 20rem 1fr;
   row-gap: 0.625rem;
 }
 
-div.write > div.attach-files {
+div.write > div.attach-files,
+div.update > div.attach-files {
   display: grid;
   grid-template-columns: 1fr minmax(80px, auto);
   gap: 0.625rem;
+}
+
+div.update > div.attach-files > ul.vertical-list {
+  grid-column: 1/-1;
+}
+div.update
+  > div.attach-files
+  > ul.vertical-list
+  > li
+  > input[type="checkbox"]:checked
+  + a {
+  color: #f00;
+  text-decoration: line-through;
 }
 
 /* 글쓰기 style 끝 */

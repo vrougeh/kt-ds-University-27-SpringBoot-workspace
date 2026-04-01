@@ -1,14 +1,18 @@
 package com.ktdsuniversity.edu.board.vo.request;
 
+import java.util.List;
+
 public class UpdateVO extends WriteVO {
-	private String id; //UPDATE - where 에 사용할 변수
+	
+	private List<Integer> deleteFileNum;
 
-	public String getId() {
-		return this.id;
+	public List<Integer> getDeleteFileNum() {
+		return this.deleteFileNum;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setDeleteFileNum(List<Integer> deleteFileNum) {
+		this.deleteFileNum = deleteFileNum;
 	}
 
+	
 }

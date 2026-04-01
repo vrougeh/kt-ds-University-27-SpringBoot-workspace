@@ -20,6 +20,7 @@
                  , FILE_NAME 
                  , ORIGIN_FILE_NAME 
               FROM BOARD
+             ORDER BY ID DESC
   </select>
   
   <insert id="insertNewBoard" parameterType="com.ktdsuniversity.edu.board.vo.request.WriteVO">

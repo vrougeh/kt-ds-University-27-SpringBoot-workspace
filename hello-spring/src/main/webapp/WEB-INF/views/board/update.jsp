@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>게시글 수정</title>
+    <script type="text/javascript" src="/js/jquery-4.0.0.slim.min.js"></script>
+    <script type="text/javascript" src="/js/board.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/hello-spring.css" />
   </head>
   <body>
     <h1>게시글 수정</h1>
-    <form method="post" action="/update/${article.id}">
-      <div class="grid write">
+    <form method="post" action="/update/${article.id}" enctype="multipart/form-data">
+      <div class="grid update">
         <label for="jubject">제목</label>
         <input
           type="text"
@@ -28,6 +31,22 @@ pageEncoding="UTF-8"%>
           placeholder="이메일을 입력하세요"
           value="${article.email}"
         />
+        
+        <label for="attach-files">첨부파일</label>
+        <div id="attach-files" class="attach-files">
+        <ul class="vertical-list">
+          <c:forEach items="${article.files}" var="file">
+            <li>
+            <input type="checkbox" name="deleteFileNum" value="${file.fileNum}"/>
+              <a href="/file/${file.fileGroupId}/${file.fileNum}">
+              ${file.displayName}
+              </a>
+            </li>
+          </c:forEach>
+        </ul>
+          <input type="file" name="attachFile" />
+          <button type="button" class="add-file">+</button>
+        </div>
 
         <label for="content">내용</label>
         <textarea
