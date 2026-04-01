@@ -6,12 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ktdsuniversity.edu.movie.service.MovieService;
 import com.ktdsuniversity.edu.movie.vo.MovieVO;
+import com.ktdsuniversity.edu.movie.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.movie.vo.request.WriteVO;
 import com.ktdsuniversity.edu.movie.vo.response.SearchResultVO;
+
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 
 @Controller
@@ -54,6 +61,26 @@ public class MovieController {
 		return"redirect:/list";
 	}
 	
+	@GetMapping("/view/{movieId}")
+	public String viewDetailPage(Model model, @PathVariable String movieId) {
+		MovieVO findResult = this.movieService.findMovieByMovieId(movieId);
+		model.addAttribute("movie",findResult);
+		return "movie/view";
+	}
+	
+	@GetMapping("/update/{movieId}")
+	public String viewUpdatePage(@PathVariable String movieId, Model model) {
+		MovieVO data = this.movieService.findMovieByMovieId(movieId);
+		model.addAttribute("movie",data);
+		return "movie/update";
+	}
+	
+	@PostMapping("/update/{movieId}")
+	public String doUpdateAction(@RequestParam String movieId, UpdateVO updateVO ) {
+		//TODO: process POST request
+		
+		return null;
+	}
 	
 
 }

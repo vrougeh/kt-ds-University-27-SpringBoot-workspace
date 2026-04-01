@@ -12,6 +12,7 @@ import com.ktdsuniversity.edu.files.dao.FilesDao;
 import com.ktdsuniversity.edu.files.vo.request.UploadVO;
 import com.ktdsuniversity.edu.movie.dao.MovieDao;
 import com.ktdsuniversity.edu.movie.vo.MovieVO;
+import com.ktdsuniversity.edu.movie.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.movie.vo.request.WriteVO;
 import com.ktdsuniversity.edu.movie.vo.response.SearchResultVO;
 
@@ -67,12 +68,21 @@ public class MovieServiceImpl implements MovieService {
 				uploadVO.setFileLength(storeFile.length());
 				uploadVO.setFilePath(storeFile.getAbsolutePath());
 				this.filesDao.insertAttachFile(uploadVO);
+				
+//				int inserturlcount = this.movieDao.insertMovieToPosterUrl(writeVO, uploadVO.getFilePath());
+				
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
 		}
 		
 		return insertCount == 1;
+	}
+
+	@Override
+	public MovieVO findMovieByMovieId(String movieId) {
+		MovieVO movie = this.movieDao.selectMovieById(movieId);
+		return movie;
 	}
 
 }

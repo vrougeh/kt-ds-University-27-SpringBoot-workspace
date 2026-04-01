@@ -86,9 +86,15 @@ div.grid textarea {
 
 /* 글쓰기 style 시작 */
 div.write {
-  grid-template-columns: 5rem 1fr;
-  grid-template-rows: 1.75rem 1.75rem 20rem 1fr;
+  grid-template-columns: 8rem 1fr;
+  /*grid-template-rows: 1.75rem 1.75rem minmax(1.75rem, auto) 20rem 1fr;*/
   row-gap: 0.625rem;
+}
+
+div.write > div.attach-files {
+  display: grid;
+  grid-template-columns: 1fr minmax(80px, auto);
+  gap: 0.625rem;
 }
 
 /* 글쓰기 style 끝 */

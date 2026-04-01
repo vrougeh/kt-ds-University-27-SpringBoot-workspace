@@ -16,14 +16,15 @@ pageEncoding="UTF-8"%>
       <thead>
       <tr>
         <th>영화 아이디</th>
-        <th>포스트 URL</th>
+        <th>영화 포스터 URL</th>
+        <th>영화 프로필 이미지</th>
         <th>영화 타이틀</th>
         <th>관람 등급</th>
         <th>오픈 날짜</th>
         <th>개봉 국가</th>
         <th>러닝타임</th>
         <th>영화 설명</th>
-        <th>시놉시스</th>
+        <!-- <th>시놉시스</th> -->
         <th>오리지널타이틀</th>
         <th>개봉상태</th>
         <th>언어</th>
@@ -38,13 +39,18 @@ pageEncoding="UTF-8"%>
               <tr>
                 <td>${movie.movieId}</td>
                 <td>${movie.posterUrl}</td>
-                <td>${movie.title}</td>
+                <td>
+                <img alt="이미지가 없습니다." src="${movie.files.filePath}">
+                <!-- filepath 가 아닌 dowloadURL을 줘야함 -->
+                </td>
+                <td><a href="/view/${movie.movieId }">${movie.title}</a>
+                </td>
                 <td>${movie.movieRating}</td>
                 <td>${movie.openDate}</td>
                 <td>${movie.openCountry}</td>
                 <td>${movie.runningTime}</td>
                 <td>${movie.introduce}</td>
-                <td>${movie.synopsis}</td>
+                <!-- <td>${movie.synopsis}</td> -->
                 <td>${movie.originalTitle}</td>
                 <td>${movie.state}</td>
                 <td>${movie.language}</td>

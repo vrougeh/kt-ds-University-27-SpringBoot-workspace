@@ -5,6 +5,10 @@
 <mapper namespace="com.ktdsuniversity.edu.movie.dao.MovieDao">
 
 <insert id="insertNewMovie" parameterType="com.ktdsuniversity.edu.movie.vo.request.WriteVO">
+<selectKey order="BEFORE" resultType="string" keyProperty="movieId">
+SELECT 'MV-' || TO_CHAR(SYSDATE,'YYYYMMDD-') || LPAD(SEQ_MOVIE_PK.NEXTVAL, 6,'0')
+  FROM DUAL
+</selectKey>
 INSERT INTO TMDB.MOVIE
      ( MOVIE_ID
      , POSTER_URL
@@ -21,8 +25,8 @@ INSERT INTO TMDB.MOVIE
      , BUDGET
      , PROFIT)            
 VALUES
-      ('MV-' || TO_CHAR(SYSDATE, 'YYYYMMDD-') || LPAD(SEQ_MOVIE_PK.NEXTVAL, 6, '0')
-     , #{posterUrl}
+      (#{movieId}
+     , 'null'
      , #{title}
      , #{movieRating}
      , #{openDate}
@@ -42,7 +46,7 @@ SELECT COUNT(MOVIE_ID)
   FROM TMDB.MOVIE
 </select>
 
-<select id="selectMovieList" resultType="com.ktdsuniversity.edu.movie.vo.MovieVO">
+<select id="selectMovieList" resultMap="MovieVOMap">
    SELECT M.MOVIE_ID
         , M.POSTER_URL
         , M.TITLE
@@ -67,7 +71,54 @@ SELECT COUNT(MOVIE_ID)
      FROM TMDB.MOVIE M
      LEFT OUTER JOIN FILES F
        ON M.MOVIE_ID = F.FILE_GROUP_ID 
-
 </select>
 
+<resultMap type="com.ktdsuniversity.edu.movie.vo.MovieVO" id="MovieVOMap" autoMapping="true">
+    <id column="MOVIE_ID" property="movieId"/>
+    <collection property="files" ofType="com.ktdsuniversity.edu.files.vo.FilesVO" autoMapping="true">
+    <!-- PK -->
+    <id column="FILE_NUM" property="fileNum"/>
+    <id column="FILE_GROUP_ID" property="fileGroupId"/>
+    </collection>
+</resultMap>
+
+<select id="selectMovieById" resultMap="MovieVOMap" parameterType="string">
+   SELECT M.MOVIE_ID
+        , M.POSTER_URL
+        , M.TITLE
+        , M.MOVIE_RATING
+        , TO_CHAR(M.OPEN_DATE, 'YYYY-MM-DD HH24:MI:SS') AS OPEN_DATE
+        , M.OPEN_COUNTRY
+        , M.RUNNING_TIME
+        , M.INTRODUCE
+        , M.SYNOPSIS
+        , M.ORIGINAL_TITLE
+        , M.STATE
+        , M.LANGUAGE
+        , M.BUDGET
+        , M.PROFIT
+        , F.FILE_NUM
+        , F.FILE_GROUP_ID
+        , F.OBFUSCATE_NAME
+        , F.DISPLAY_NAME
+        , F.EXTEND_NAME
+        , F.FILE_LENGTH
+        , F.FILE_PATH
+     FROM TMDB.MOVIE M
+     LEFT OUTER JOIN FILES F
+       ON M.MOVIE_ID = F.FILE_GROUP_ID 
+    WHERE MOVIE_ID = #{_parameter}
+
+</select>
+<update id="insertMovieToPosterUrl" parameterType="string">
+INSERT INTO TMDB.MOVIE
+       POSTER_URL
+VALUES #{_parameter}
+ WHERE MOVIE_ID = #{movie_id}
+</update>
+
+
 </mapper>
+
+
+

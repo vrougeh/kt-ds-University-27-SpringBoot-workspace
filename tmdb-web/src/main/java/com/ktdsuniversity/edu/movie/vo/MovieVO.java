@@ -23,6 +23,12 @@ public class MovieVO {
 	
 	private FilesVO files;
 	
+	public FilesVO getFiles() {
+		return this.files;
+	}
+	public void setFiles(FilesVO files) {
+		this.files = files;
+	}
 	public String getMovieId() {
 		return this.movieId;
 	}

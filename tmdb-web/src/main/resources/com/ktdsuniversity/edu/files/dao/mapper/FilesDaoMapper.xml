@@ -5,7 +5,7 @@
 <mapper namespace="com.ktdsuniversity.edu.files.dao.FilesDao">
 
 	<insert id="insertAttachFile" parameterType="com.ktdsuniversity.edu.files.vo.request.UploadVO">
-		INSERT INTO SPRING_BOOT.FILES
+		INSERT INTO TMDB.FILES
 		       (FILE_NUM
 		     , FILE_GROUP_ID
 		     , OBFUSCATE_NAME
@@ -23,3 +23,7 @@
 	</insert>
 
 </mapper>
+
+
+
+

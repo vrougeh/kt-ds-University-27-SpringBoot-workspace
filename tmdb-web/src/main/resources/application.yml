@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 # 콘솔 로그 레벨 변경
 logging:
   level:
