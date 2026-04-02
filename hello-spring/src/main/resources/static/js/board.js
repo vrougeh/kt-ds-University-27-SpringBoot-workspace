@@ -31,5 +31,38 @@ $().ready(function () {
   $(".del-file").on("click", function () {});
   
   
-  $("")
+  $("#writeVO").on("submit",function(event){
+	event.preventDefault();
+	
+	$(this).find(".validation-error").remove();
+	
+	var subject = $("#subject").val();
+	if (!subject) {
+	  var subjectErrorMessage = $("<div>");
+	  subjectErrorMessage.addClass("validation-error");
+	  subjectErrorMessage.text("제목을 입력해주세요.");
+
+	  $("#subject").after(subjectErrorMessage);
+	}else if (subject.length < 3) {
+	  var subjectErrorMessage = $("<div>");
+	  subjectErrorMessage.addClass("validation-error");
+	  subjectErrorMessage.text("제목은 3글자 이상이여야합니다.");
+
+	  $("#subject").after(subjectErrorMessage);
+	}
+	
+	var email = $("#email").val();
+	if (!email) {
+	  var emailErrorMessage = $("<div>");
+	  emailErrorMessage.addClass("validation-error");
+	  emailErrorMessage.text("이메일 형태가 아닙니다.");
+
+	  $("#email").after(emailErrorMessage);
+	}
+	
+	if ($(".validation-error").length === 0) {
+	  this.submit();
+	}
+	
+  })
 });
