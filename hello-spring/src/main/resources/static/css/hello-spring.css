@@ -9,6 +9,15 @@ body {
   color: #333;
 }
 
+div.validation-error {
+    color: #f00;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    background-color: #f002;
+}
+
+
 pre {
   margin: 0;
   font-size: 1rem;
@@ -104,8 +113,13 @@ div.grid textarea {
 div.write,
 div.update {
   grid-template-columns: 5rem 1fr;
-  grid-template-rows: 1.75rem 1.75rem minmax(1.75rem, auto) 20rem 1fr;
+  grid-template-rows: repeat(3, minmax(1.75rem, auto)) 20rem 1fr;
   row-gap: 0.625rem;
+}
+
+div.write > div.input-div > input {
+  width: 100%;
+  display: block;
 }
 
 div.write > div.attach-files,

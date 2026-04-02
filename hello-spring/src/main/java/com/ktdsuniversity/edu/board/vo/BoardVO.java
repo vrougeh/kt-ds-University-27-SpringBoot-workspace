@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.ktdsuniversity.edu.files.vo.FilesVO;
 
+import jakarta.validation.constraints.Size;
+
 public class BoardVO {
 	
 	private String id;
+	@Size(min=3, message="3자이상 입력")
 	private String subject;
 	private String content;
 	private String email;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,23 +12,33 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
     <h1>게시글 작성</h1>
-    <form method="post" action="/write" enctype="multipart/form-data">
+    <!-- form:form modelAttribute ==> form 태그 내부의 input, textarea, select 등을 컨트롤러로 보내기 위한 아이디
+         보편적으로 변수의 이름(엔드포인트의) -->
+    <form:form modelAttribute="writeVO" method="post" action="/write" enctype="multipart/form-data" >
       <div class="grid write">
-        <label for="jubject">제목</label>
-        <input
-          type="text"
-          name="subject"
-          id="subject"
-          placeholder="제목을 입력하세요"
-        />
+        <label for="subject">제목</label>
+        <div class="input-div">
+          <input
+            type="text"
+            name="subject"
+            id="subject"
+            placeholder="제목을 입력하세요"
+            value="${inputData.subject }"
+          />
+          <form:errors path="subject" cssClass="validation-error" element="div" />
+        </div>
 
         <label for="email">이메일</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="이메일을 입력하세요"
-        />
+        <div class="input-div">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="이메일을 입력하세요"
+            value="${inputData.email}"
+          />
+          <form:errors path="email" cssClass="validation-error" element="div" />
+        </div>
 
         <label for="attach-files">첨부파일</label>
         <div id="attach-files" class="attach-files">
@@ -37,10 +48,10 @@ pageEncoding="UTF-8"%>
 
         <label for="content">내용</label>
         <textarea
-          name="content"
+          name="content"    
           id="content"
           placeholder="내용을 입력하세요"
-        ></textarea>
+        >${inputData.content}</textarea>
 
         <div class="btn-group">
           <div class="right-align">
@@ -48,6 +59,6 @@ pageEncoding="UTF-8"%>
           </div>
         </div>
       </div>
-    </form>
+    </form:form>
   </body>
 </html>
