@@ -108,12 +108,14 @@ SELECT COUNT(MOVIE_ID)
      LEFT OUTER JOIN FILES F
        ON M.MOVIE_ID = F.FILE_GROUP_ID 
     WHERE MOVIE_ID = #{_parameter}
-
 </select>
+
+<!-- 첨부파일 업로드시 posterURL을 변경한다 -->
 <update id="insertMovieToPosterUrl" parameterType="string">
 INSERT INTO TMDB.MOVIE
        POSTER_URL
-VALUES #{_parameter}
+       <!-- 아래 코드 바꾸기 -->
+VALUES #{attachFile.file.filePath}
  WHERE MOVIE_ID = #{movieId}
 </update>
 

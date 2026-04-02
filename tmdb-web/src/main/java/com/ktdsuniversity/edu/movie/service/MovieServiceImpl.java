@@ -69,7 +69,7 @@ public class MovieServiceImpl implements MovieService {
 				uploadVO.setFilePath(storeFile.getAbsolutePath());
 				this.filesDao.insertAttachFile(uploadVO);
 				
-//				int inserturlcount = this.movieDao.insertMovieToPosterUrl(writeVO, uploadVO.getFilePath());
+//				int inserturlcount = this.movieDao.insertMovieToPosterUrl(writeVO);
 				
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();

@@ -38,10 +38,9 @@ pageEncoding="UTF-8"%>
             <c:forEach items="${searchResult}" var="movie">
               <tr>
                 <td>${movie.movieId}</td>
-                <td>${movie.posterUrl}</td>
+                <td>${movie.posterUrl}</td> 
                 <td>
-                <img alt="이미지가 없습니다." src="${movie.files.filePath}">
-                <!-- filepath 가 아닌 dowloadURL을 줘야함 -->
+                <img alt="이미지가 없습니다." src="/file/${movie.files.fileGroupId}/${movie.files.fileNum}">
                 </td>
                 <td><a href="/view/${movie.movieId }">${movie.title}</a>
                 </td>
@@ -63,7 +62,7 @@ pageEncoding="UTF-8"%>
           <tr>
             <td colspan="13">검색된 데이터가 없습니다.</td>
           </tr>
-          </c:otherwise>
+          </c:otherwise>0
         </c:choose>
       </tbody>
     </table>

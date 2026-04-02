@@ -18,6 +18,6 @@ public interface MovieDao {
 
 	MovieVO selectMovieById(String movieId);
 
-	int insertMovieToPosterUrl(String filePath);
+	int insertMovieToPosterUrl(WriteVO writeVO);
 
 }
