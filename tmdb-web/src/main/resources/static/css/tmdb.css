@@ -99,6 +99,11 @@ div.write {
   row-gap: 0.625rem;
 }
 
+div.write > div.input-div > input {
+  width: 100%;
+  display: block;
+}
+
 div.write > div.attach-files {
   display: grid;
   grid-template-columns: 1fr minmax(80px, auto);
