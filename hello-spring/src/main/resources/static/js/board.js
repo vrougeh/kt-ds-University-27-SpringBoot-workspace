@@ -29,4 +29,7 @@ $().ready(function () {
   });
 
   $(".del-file").on("click", function () {});
+  
+  
+  $("")
 });
