@@ -1,22 +1,32 @@
 package com.ktdsuniversity.edu.movie.vo.request;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class WriteVO {
-	
+	@NotBlank(message = "ID를 반드시 입력해주세요")
 	private String movieId;
+	@NotBlank(message = "URL을 반드시 입력해주세요")
 	private String posterUrl;
+	@NotBlank(message = "타이틀을 반드시 입력해주세요")
 	private String title;
+	@Size(max=3, message="최대 3자 입력가능")
 	private String movieRating;
 	private String openDate;
+	@Size(max=2, message="최대 2자 입력가능")
 	private String openCountry;
 	private int runningTime;
 	private String introduce;
+	@NotBlank(message = "시놉시스를 반드시 입력해주세요")
 	private String synopsis;
 	private String originalTitle;
+	@Size(max=5, message="최대 5자 입력가능")
+	@NotBlank(message = "상태를 반드시 입력해주세요")
 	private String state;
+	@Size(max=6, message="최대 6자 입력가능")
+	@NotBlank(message = "언어를 반드시 입력해주세요")
 	private String language;
 	private long budget;
 	private long profit;

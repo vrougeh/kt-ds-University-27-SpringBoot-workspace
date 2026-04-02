@@ -1,7 +1,5 @@
 package com.ktdsuniversity.edu.movie.vo;
 
-import java.util.List;
-
 import com.ktdsuniversity.edu.files.vo.FilesVO;
 
 public class MovieVO {
