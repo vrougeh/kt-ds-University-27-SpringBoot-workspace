@@ -1,8 +1,94 @@
 /*
 회원페이지와 관련된 스크립트 작성
 */
-
 $().ready(function () {
+  $("#email").on("blur", function () {
+    setTimeout(function () {
+      $("#email").trigger("keyup");
+    }, 150);
+  });
+
+  var keyUpStartTime = new Date().getTime();
+  $("#email").on("keyup", function () {
+    var emailValue = $(this).val();
+    var nowTime = new Date().getTime();
+
+    if (nowTime - keyUpStartTime < 100) {
+      return;
+    }
+    keyUpStartTime = nowTime;
+    //이메일을 입력했을 때
+    var emailParttern = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/;
+    if (emailParttern.test(emailValue)) {
+      //비동기로 중복여부를 검사해 온다.
+      fetch("/regist/check/duplicate/" + emailValue)
+        .then(function (fetchResult) {
+          return fetchResult.json();
+        })
+        .then(function (json) {
+          // console.log(json);
+          var duplicateResult = $("#email")
+            .closest(".input-div")
+            .children(".validation-error");
+          if (duplicateResult.length === 0) {
+            var duplicateResult = $("#email")
+              .closest(".input-div")
+              .children(".validation-ok");
+          }
+
+          if (duplicateResult.length === 0) {
+            var duplicateResult = $("<div>");
+            $("#email").after(duplicateResult);
+          }
+
+          //비동기 결과를 이용하여 메세지 노출
+          if (!json.duplicate) {
+            //사용가능한 이메일
+            duplicateResult.removeClass("validation-error");
+            duplicateResult.addClass("validation-ok");
+            duplicateResult.text(json.email + "은 사용 가능합니다.");
+          } else {
+            //사용불가능한 이메일
+            duplicateResult.removeClass("validation-ok");
+            duplicateResult.addClass("validation-error");
+            duplicateResult.text(json.email + "은 이미 사용중 입니다.");
+          }
+        });
+    } else {
+      $(this)
+        .closest(".input-div")
+        .children(".validation-ok, .validation-error")
+        .remove();
+    }
+  });
+
+  $("#confirm-password, #password").on("keyup", function () {
+    var confirmPasswordValue = $("#confirm-password").val();
+    var passwordValue = $("#password").val();
+
+    $("#password, #confirm-password")
+      .closest(".input-div")
+      .children(".validation-error")
+      .remove();
+
+    if (confirmPasswordValue !== passwordValue) {
+      var passwordErrorMessage = $("<div>");
+      passwordErrorMessage.addClass("validation-error");
+      passwordErrorMessage.text("비밀번호가 일치하지 않습니다.");
+
+      $("#password , #confirm-password").after(passwordErrorMessage);
+    }
+  });
+
+  $("#show-password").on("change", function () {
+    var checked = $(this).prop("checked");
+    if (checked) {
+      $("#password").attr("type", "text");
+    } else {
+      $("#password").attr("type", "password");
+    }
+  });
+
   //브라우저에서 입력값 검증하는 방법 2가지
   //1. 폼 전송시 체크
   //2. 입력폼에 값을 입력할때 체크(keyup event)
@@ -15,6 +101,8 @@ $().ready(function () {
 
     //form 내부 존재하는 validation-error 엘리먼트를 제거
     $(this).find(".validation-error").remove();
+
+    $("#password").trigger("keyup");
 
     //이름 이메일 비밀번호 중 하나 이상 재대로 입력되지 않으면 에러 메시지를 화면에 보여준다. 폼전송x
     var email = $("#email").val();

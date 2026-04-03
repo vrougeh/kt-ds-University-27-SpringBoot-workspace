@@ -58,6 +58,7 @@ public class BoardController {
 	public String doWriteAction(@Valid WriteVO writeVO, BindingResult bindingResult, Model model) { //@ModelAttribute 생략
 		//사용자의 입력값을 검증 했을 때 에러가 있다면 
 		if(bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors());
 			//브라우저에게 "board/write"페이지를 보여주도록하고 해당페이지는 사용자가 입력한 값을 전달한다
 			model.addAttribute("inputData",writeVO);
 			return "board/write";

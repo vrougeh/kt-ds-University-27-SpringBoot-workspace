@@ -152,6 +152,11 @@ div.regist {
   align-items: center;
 }
 
+div.regist > div.input-div > input {
+  width: 100%;
+  display: block;
+}
+
 div.member-update {
   grid-template-columns: 7.5rem 1fr;
   grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;

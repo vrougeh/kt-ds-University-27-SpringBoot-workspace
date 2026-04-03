@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix="form"
+uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
   <body>
     <h1>회원가입</h1>
     <form:form modelAttribute="registVO" method="post" action="/regist">
-      <div class="grid write">
+      <div class="grid regist">
         <label for="email">이메일</label>
         <div class="input-div">
           <input
@@ -46,8 +46,24 @@ pageEncoding="UTF-8"%>
             id="password"
             placeholder="비밀번호를 입력하세요"
           />
-          <form:errors path="password" cssClass="validation-error" element="div" />
+          <form:errors
+            path="password"
+            cssClass="validation-error"
+            element="div"
+          />
         </div>
+
+        <label for="confirm-password">비밀번호 확인</label>
+        <div class="input-div">
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+          />
+        </div>
+
+        <label for="show-password">비밀번호 확인하기</label>
+        <input type="checkbox" id="show-password" />
 
         <div class="btn-group">
           <div class="right-align">

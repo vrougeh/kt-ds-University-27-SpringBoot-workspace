@@ -15,11 +15,13 @@ import com.ktdsuniversity.edu.members.service.MembersService;
 import com.ktdsuniversity.edu.members.vo.MembersVO;
 import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.members.vo.request.RegistVO;
+import com.ktdsuniversity.edu.members.vo.response.DuplicateResultVO;
 import com.ktdsuniversity.edu.members.vo.response.SearchResultVO;
 
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -60,6 +62,22 @@ public class MembersController {
 		boolean createResult = this.membersService.createNewMembers(registVO);
 		System.out.println("회원가입 성공?" + createResult);
 		return"redirect:/member";
+	}
+	
+	@ResponseBody
+	@GetMapping("/regist/check/duplicate/{email}")
+	public DuplicateResultVO doCheckDuplicateEmailAction(@PathVariable String email) {
+		//email이 이미 사용중인지 확이한다.
+		MembersVO membersVO = this.membersService.findMembersByEmail(email);
+//		System.out.println("이메일이 있는지 확인? "+membersVO);
+		//확인된 결과를 브라우저에게 json으로 전송한다.
+		// 사용중 > {email: test@test, duplicate:true}
+		// 사용중 X > {email: test@test, duplicate:false}
+		DuplicateResultVO result = new DuplicateResultVO();
+		result.setEmail(email);
+		result.setDuplicate(membersVO != null);
+		
+		return result;
 	}
 	
 	@GetMapping("/member/view/{email}")

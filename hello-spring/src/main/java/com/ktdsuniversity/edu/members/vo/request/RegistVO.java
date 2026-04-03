@@ -18,6 +18,14 @@ public class RegistVO {
 	       , message = "비밀번호는 영소문자, 영대문자, 숫자 최소 1개를 포함하여 8글자 이상으로 입력하세요")
 	private String password;
 	
+	private String salt;
+	
+	public String getSalt() {
+		return this.salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
 	public String getEmail() {
 		return this.email;
 	}
