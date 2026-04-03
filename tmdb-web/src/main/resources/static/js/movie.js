@@ -33,7 +33,12 @@ $().ready(function () {
 		  stateErrorMessage.text("상태를 반드시 입력해주세요");
 
 		  $("#state").after(stateErrorMessage);
-		}
+		}else if(state.length > 6) {
+           var stateErrorMessage = $("<div>");
+           stateErrorMessage.addClass("validation-error");
+           stateErrorMessage.text("5자까지 입력해주세요");
+           $("#state").after(stateErrorMessage);
+         }
 		
 		var language = $("#language").val();
 		if (!language) {
@@ -42,7 +47,12 @@ $().ready(function () {
 		  languageErrorMessage.text("언어를 반드시 입력해주세요");
 
 		  $("#language").after(languageErrorMessage);
-		}
+		}else if (language.length > 7) {
+            var languageErrorMessage = $("<div>");
+            languageErrorMessage.addClass("validation-error");
+            languageErrorMessage.text("6자 까지 입력해주세요");
+            $("#language").after(languageErrorMessage);
+        }
 
 		
 		if ($(".validation-error").length === 0) {
