@@ -60,9 +60,14 @@ public class MovieController {
 	public String doWriteAction(@Valid WriteVO writeVO, BindingResult bindingResult, Model model) {
 		
 		if(bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors());
 			model.addAttribute("inputData",writeVO);
 			return "movie/write";
 		}
+//		String title = writeVO.getTitle();
+//		title = title.replace("<", "&lt;")
+//				     .replace(">", "&gt;");
+//		writeVO.setTitle(title);
 		
 		boolean createResult = this.movieService.createNewMovie(writeVO);
 		System.out.println(createResult);

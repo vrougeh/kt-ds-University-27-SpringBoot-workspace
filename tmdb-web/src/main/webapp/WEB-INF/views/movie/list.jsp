@@ -62,7 +62,7 @@ pageEncoding="UTF-8"%>
           <tr>
             <td colspan="13">검색된 데이터가 없습니다.</td>
           </tr>
-          </c:otherwise>0
+          </c:otherwise>
         </c:choose>
       </tbody>
     </table>

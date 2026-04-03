@@ -75,7 +75,7 @@ pageEncoding="UTF-8"%>
             name="synopsis"
             id="synopsis"
             placeholder="내용을 입력하세요."
-          ></textarea>
+          > ${inputData.synopsis } </textarea>
         <form:errors path="synopsis" cssClass="validation-error" element="div"/>
         </div>
 

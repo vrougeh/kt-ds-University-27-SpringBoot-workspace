@@ -53,6 +53,18 @@ $().ready(function () {
             languageErrorMessage.text("6자 까지 입력해주세요");
             $("#language").after(languageErrorMessage);
         }
+        
+        if(!$("#runningTime").val()){
+            $("#runningTime").val("0");
+        }
+        
+        if(!$("#budget").val()){
+            $("#budget").val("0");
+        }
+        
+        if(!$("#profit").val()){
+            $("#profit").val("0");
+        }
 
 		
 		if ($(".validation-error").length === 0) {

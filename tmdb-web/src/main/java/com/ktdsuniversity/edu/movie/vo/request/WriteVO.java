@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class WriteVO {
-	@NotBlank(message = "ID를 반드시 입력해주세요")
+//	@NotBlank(message = "ID를 반드시 입력해주세요") query 호출 전에(controller에서) 검사함으로 있으면 안됨
 	private String movieId;
-	@NotBlank(message = "URL을 반드시 입력해주세요")
+//	@NotBlank(message = "URL을 반드시 입력해주세요")
 	private String posterUrl;
 	@NotBlank(message = "타이틀을 반드시 입력해주세요")
 	private String title;
