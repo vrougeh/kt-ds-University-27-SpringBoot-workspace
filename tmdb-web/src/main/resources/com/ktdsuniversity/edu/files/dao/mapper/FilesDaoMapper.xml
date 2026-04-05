@@ -37,15 +37,7 @@
       FROM TMDB.FILES
      WHERE FILE_GROUP_ID = #{fileGroupId}
        AND FILE_NUM = #{fileNum}
-</select>
-  
-
-<select id="selectFilesByGroupId"  parameterType="string" resultType="string">
-    SELECT FILE_PATH
-  FROM TMDB.FILES
- WHERE FILE_GROUP_ID = #{id}
-</select>
-    
+</select>   
 
 </mapper>
 
