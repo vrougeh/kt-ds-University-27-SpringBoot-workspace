@@ -3,7 +3,7 @@ package com.ktdsuniversity.edu.movie.vo;
 import com.ktdsuniversity.edu.files.vo.FilesVO;
 
 public class MovieVO {
-	
+
 	private String movieId;
 	private String posterUrl;
 	private String title;
@@ -18,9 +18,9 @@ public class MovieVO {
 	private String language;
 	private long budget;
 	private long profit;
-	
+
 	private FilesVO files;
-	
+
 	public FilesVO getFiles() {
 		return this.files;
 	}
@@ -147,8 +147,8 @@ public class MovieVO {
 	public void setProfit(long profit) {
 		this.profit = profit;
 	}
-	
-	
-	
+
+
+
 
 }

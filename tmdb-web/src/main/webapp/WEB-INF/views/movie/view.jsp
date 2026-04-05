@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/css/tmdb.css" />
 </head>
 <body>
+  <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <h1>영화 내용 조회</h1>
     <div class="grid view">
         <span>영화 아이디</span>

@@ -1,144 +1,144 @@
 @charset "UTF-8";
 
+/* 1. 기본 폰트 및 배경 설정 */
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  padding: 20px;
   color: #333;
+  background-color: #f8f9fa;
+  line-height: 1.6;
 }
 
-div.validation-error {
-    color: #f00;
-    font-weight: 600;
-    font-size: 0.85rem;
-    margin-top: 0.3rem;
-    background-color: #f002;
+/* 제목 스타일 */
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #222;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
 }
 
-pre {
-  margin: 0;
-  font-size: 1rem;
-}
-
-/* table grid 시작 */
-table.grid {
-  border-collapse: collapse;
+/* 2. 입력창(Input, Textarea) 스타일 업그레이드 */
+div.grid input,
+div.grid textarea {
   width: 100%;
-  max-width: 1200px;
+  padding: 0.75rem;
   border: 1px solid #ddd;
-}
-
-table.grid > tbody > tr:nth-child(odd) {
-  background-color: #f5f5f5;
-}
-
-table.grid > tbody > tr:hover {
-  background-color: #fafafa;
-}
-
-table.grid > thead > tr {
+  border-radius: 6px; /* 둥근 모서리 */
+  font-size: 0.95rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   background-color: #fff;
 }
 
-table.grid > thead > tr > th {
-  padding: 0.625rem;
+div.grid input:focus,
+div.grid textarea:focus {
+  outline: none;
+  border-color: #ff2d2d;
+  box-shadow: 0 0 0 3px rgba(255, 45, 45, 0.1); /* 포커스 효과 */
 }
 
-table.grid > thead > tr > th,
-table.grid > tbody > tr > td {
-  border-right: none;
-  padding: 0.625rem;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+/* 3. 테이블 스타일 (목록 페이지) */
+table.grid {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  /* max-width: 1200px; */
+  background-color: #fff;
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+  border: 1px solid #eee;
 }
-/* table grid 끝 */
 
-/* grid style 시작 */
+table.grid thead tr {
+  background-color: #f1f3f5;
+  color: #495057;
+  font-weight: bold;
+}
+
+table.grid th,
+table.grid td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+table.grid tbody tr:hover {
+  background-color: #fff5f5;
+  cursor: pointer;
+}
+
+/* 4. 그리드 레이아웃 (쓰기, 보기 공통) */
 div.grid {
   display: grid;
+  gap: 1rem;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  /* max-width: 900px; */
 }
 
+/* 라벨 스타일 */
+div.grid > label,
+div.grid > span {
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+/* 5. 버튼 그룹 스타일 */
 div.grid > div.btn-group {
   grid-column: 1 / -1;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
 }
 
-div.grid > div.btn-group a {
+div.grid > div.btn-group a,
+div.grid button {
   display: inline-block;
-  padding: 0.4rem 0.625rem;
-  color: #555;
+  padding: 0.6rem 1.2rem;
+  background-color: #444;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  transition: 0.2s;
+  /* cursor: pointer; */
+}
+
+div.grid > div.btn-group a:hover,
+div.grid button:hover {
+  background-color: #ff2d2d;
+  color: #fff;
   text-decoration: none;
 }
 
-div.grid > div.btn-group a:hover {
-  color: #ff2d2d;
-  text-decoration: underline;
+/* 6. 파일 첨부 디자인 */
+div.attach-files {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px dashed #ccc;
 }
 
-div.grid > div.btn-group > div.right-align {
-  text-align: right;
+/* 7. 에러 메시지 */
+div.validation-error {
+  color: #e03131;
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  background-color: #fff5f5;
+  border-left: 3px solid #ff2d2d;
 }
-
-div.grid > label {
-  padding-left: 0.625rem;
-}
-
-div.grid input,
-div.grid button,
-div.grid textarea {
-  padding: 0.625rem;
-}
-/* grid style 끝 */
-
-/* 글쓰기 style 시작 */
-div.write {
-  grid-template-columns: 8rem 1fr;
-  /*grid-template-rows: 1.75rem 1.75rem minmax(1.75rem, auto) 20rem 1fr;*/
-  row-gap: 0.625rem;
-}
-
-div.write > div.input-div > input {
-  width: 100%;
-  display: block;
-}
-
-div.write > div.attach-files {
-  display: grid;
-  grid-template-columns: 1fr minmax(80px, auto);
-  gap: 0.625rem;
-}
-
-/* 글쓰기 style 끝 */
-
-/* 회원가입 style 시작 */
-div.regist {
-  grid-template-columns: 7.5rem 1fr;
-  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
-  row-gap: 0.625rem;
-  align-items: center;
-}
-
-div.member-update {
-  grid-template-columns: 7.5rem 1fr;
-  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
-  row-gap: 0.625rem;
-  align-items: center;
-}
-div.member-view {
-  grid-template-columns: 7.5rem 1fr;
-  grid-template-rows: repeat(4, minmax(1.75rem, auto)) 1fr;
-  row-gap: 0.625rem;
-  align-items: center;
-}
-
-/* 회원가입 style 끝 */
-
-/* 게시글 내용 조회 style 시작 */
-div.view {
-  grid-template-columns: 7.5rem 1fr;
-  grid-template-rows: repeat(9, minmax(1.75rem, auto));
-  row-gap: 0.625rem;
-}
-/* 게시글 내용 조회 style 끝 */

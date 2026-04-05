@@ -13,7 +13,9 @@
 		     , EXTEND_NAME
 		     , FILE_LENGTH
 		     , FILE_PATH)
-		VALUES (#{fileNum}
+		VALUES ((SELECT NVL(MAX(FILE_NUM),0)+1
+				  FROM FILES
+				 WHERE FILE_GROUP_ID = #{fileGroupId})
 		     , #{fileGroupId}
 		     , #{obfuscateName}
 		     , #{displayName}
@@ -32,10 +34,18 @@
          , EXTEND_NAME
          , FILE_LENGTH
          , FILE_PATH
-      FROM FILES
+      FROM TMDB.FILES
      WHERE FILE_GROUP_ID = #{fileGroupId}
        AND FILE_NUM = #{fileNum}
 </select>
+  
+
+<select id="selectFilesByGroupId"  parameterType="string" resultType="string">
+    SELECT FILE_PATH
+  FROM TMDB.FILES
+ WHERE FILE_GROUP_ID = #{id}
+</select>
+    
 
 </mapper>
 

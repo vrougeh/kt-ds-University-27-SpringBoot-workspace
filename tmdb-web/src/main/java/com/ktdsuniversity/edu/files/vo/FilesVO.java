@@ -1,7 +1,7 @@
 package com.ktdsuniversity.edu.files.vo;
 
 public class FilesVO {
-	
+
 	private int fileNum;
 	private String fileGroupId;
 	private String obfuscateName;
@@ -9,7 +9,7 @@ public class FilesVO {
 	private String extendName;
 	private long fileLength;
 	private String filePath;
-	
+
 	public int getFileNum() {
 		return this.fileNum;
 	}
@@ -52,5 +52,5 @@ public class FilesVO {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	
+
 }

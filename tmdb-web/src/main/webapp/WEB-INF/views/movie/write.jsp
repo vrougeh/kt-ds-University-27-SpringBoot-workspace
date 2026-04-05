@@ -11,6 +11,7 @@ pageEncoding="UTF-8"%>
     <script type="text/javascript" src="/js/movie.js"></script>
   </head>
   <body>
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <h1>영화 등록</h1>
     <form:form modelAttribute="writeVO" method="post" action="/write" enctype="multipart/form-data">
      <div class="grid write">

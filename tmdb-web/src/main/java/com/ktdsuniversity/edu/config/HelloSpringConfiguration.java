@@ -14,8 +14,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //application.yml의 mvc관련 설정들이 모두 무시됨
 @EnableWebMvc
 public class HelloSpringConfiguration implements WebMvcConfigurer{
-	
-	
+
+
 	//configureViewResolvers 설정
 	//spring.mvc.view.prefix, spring.mvc.view.suffix 재설정
 	@Override

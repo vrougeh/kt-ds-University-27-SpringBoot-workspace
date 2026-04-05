@@ -20,10 +20,10 @@ public class FilesController {
 
 	@Autowired
 	private FilesService filesService;
-	
-	
+
+
 private Map<String,String> mimeTypeMap;
-	
+
 	public FilesController() {
 		this.mimeTypeMap = new HashMap<>();
 		// 1. Text & Web
@@ -67,20 +67,20 @@ private Map<String,String> mimeTypeMap;
 		this.mimeTypeMap.put("xml", "application/xml");
 		this.mimeTypeMap.put("zip", "application/zip");
 	}
-	
+
 	@GetMapping("/file/{fileGroupId}/{fileNum}")
 	public ResponseEntity<Resource> doDownLoadAction(@PathVariable String fileGroupId, @PathVariable int fileNum){
-		
+
 		SearchFileVO searchFileVO = new SearchFileVO();
 		searchFileVO.setFileGroupId(fileGroupId);
 		searchFileVO.setFileNum(fileNum);
-		
+
 		//다운로드를 위한 정보와 파일 찾아오기
 		DownLoadVO downLoadVO = this.filesService.findAttachFile(searchFileVO);
 		if (downLoadVO == null || downLoadVO.getResource() == null) {
-		    return ResponseEntity.notFound().build(); 
+		    return ResponseEntity.notFound().build();
 		}
-		
+
 		//다운로드 시작
 		//HTTP Response 세팅
 		//HTTP Response Header 세팅
@@ -91,7 +91,7 @@ private Map<String,String> mimeTypeMap;
 		headers.set(HttpHeaders.CONTENT_LENGTH, downLoadVO.getFileLength()+"");
 //		content-type = 마임타입
 		headers.set(HttpHeaders.CONTENT_TYPE, mimeTypeMap.getOrDefault(downLoadVO.getExtendName().toLowerCase(),"application/octet-stream"));
-		
+
 		//브라우저에게 http resoponse 전송
 		return ResponseEntity.ok().headers(headers).body(downLoadVO.getResource());
 	}

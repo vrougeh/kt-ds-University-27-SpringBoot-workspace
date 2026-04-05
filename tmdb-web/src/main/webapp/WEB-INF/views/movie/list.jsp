@@ -6,9 +6,10 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>list</title>
-    <link rel="stylesheet" type="text/css" href="/css/tmdb" />
+    <link rel="stylesheet" type="text/css" href="/css/tmdb.css" />
   </head>
   <body>
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
   <div class="grid list">
     <h1>영화 목록</h1>
     <div>총 ${searchCount}개의 영화가 검색되었습니다.</div>

@@ -30,9 +30,9 @@ public class WriteVO {
 	private String language;
 	private long budget;
 	private long profit;
-	
+
 	private MultipartFile attachFile;
-	
+
 	public MultipartFile getAttachFile() {
 		return this.attachFile;
 	}
@@ -123,8 +123,8 @@ public class WriteVO {
 	public void setProfit(long profit) {
 		this.profit = profit;
 	}
-	
-	
-	
+
+
+
 
 }

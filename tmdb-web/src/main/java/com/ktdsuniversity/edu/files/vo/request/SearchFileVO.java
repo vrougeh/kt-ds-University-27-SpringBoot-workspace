@@ -1,10 +1,10 @@
 package com.ktdsuniversity.edu.files.vo.request;
 
 public class SearchFileVO {
-	
+
 	private String fileGroupId;
 	private int fileNum;
-	
+
 	public String getFileGroupId() {
 		return this.fileGroupId;
 	}

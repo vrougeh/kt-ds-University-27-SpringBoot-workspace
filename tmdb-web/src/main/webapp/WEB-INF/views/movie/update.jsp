@@ -8,6 +8,7 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" type="text/css" href="/css/tmdb.css" />
   </head>
   <body>
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <h1>영화 등록</h1>
     <form method="post" action="/update/${movie.movieId }" enctype="multipart/form-data">
       <div class="grid write">
