@@ -1,12 +1,11 @@
 package com.ktdsuniversity.edu.members.vo.request;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class RegistVO {
 
-	@Email(message = "이메일 형태가 아닙니다.")
+	@Pattern(regexp = "\\b[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}\\b", message = "이메일 형태가 아닙니다.")
 	@NotBlank(message = "이메일 형태가 아닙니다.")
 	private String email;
 	@NotBlank(message = "이름을 반드시 입력해주세요")
