@@ -14,6 +14,7 @@
 		<div>총 ${searchCount}개의 게시글이 검색되었습니다.</div>
 		<div class="login-button"><a href="/login">로그인</a></div>
 		<div class="loout"><a href="/logout">로그아웃</a></div>
+		<div class="regist"><a href="/regist">회원가입</a></div>
 		<table class="grid">
 			<thead>
 				<tr>

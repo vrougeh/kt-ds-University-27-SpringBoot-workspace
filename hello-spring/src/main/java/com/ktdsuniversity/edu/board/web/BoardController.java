@@ -68,7 +68,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")  /*@Valid의 결과를 받아오는 파라미터 반드시 @Valid 파라미터 이후에 작성*/
-	public String doWriteAction(@Valid WriteVO writeVO, BindingResult bindingResult, Model model, HttpServletRequest request) { //@ModelAttribute 생략
+	public String doWriteAction(@Valid WriteVO writeVO, BindingResult bindingResult, Model model, HttpServletRequest request, HttpSession session) { //@ModelAttribute 생략
 		//사용자의 입력값을 검증 했을 때 에러가 있다면 
 		if(bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
@@ -78,31 +78,26 @@ public class BoardController {
 		}
 		
 		
-		//로그인 데이터 (__LOGIN_DATA__)에서 로그인한  사용자의 이메일을 가져온다
-		HttpSession session =  request.getSession();
-		
 		MembersVO loginMember = (MembersVO) session.getAttribute("__LOGIN_DATA__");
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		
-		LocalDateTime latestLoginBlockDate = LocalDateTime.parse(loginMember.getLoginDate(), formatter);
-		if(latestLoginBlockDate.isAfter(LocalDateTime.now().minusMinutes(30))) {
-			System.out.println("작성실패");
+		if(loginMember == null) {
+			System.out.println("로그인 데이터가 없습니다.");
 			return "redirect:/";
 		}
-		
-		writeVO.setEmail(loginMember.getEmail());
-		
-		
 		
 		System.out.println(writeVO.getSubject());
 		System.out.println(writeVO.getEmail());
 		System.out.println(writeVO.getContent());
 		
 		//create update delete => 성공 or 실패 여부 반환
-		boolean createResult = this.boardService.createNewBoard(writeVO);
+		boolean createResult = this.boardService.createNewBoard(writeVO, loginMember);
 		
 		System.out.println("게시글 생성 성공?" + createResult);
+		
+		if (!createResult) {
+	        // 시간이 초과되었거나 등록에 실패한 경우
+			System.out.println("시간이 초과되었습니다.");
+	        return "redirect:/";
+	    }
 		
 		// redirect: 브라우저에게 다음 End Point를 요청하도록 지시
 		return "redirect:/";

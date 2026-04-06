@@ -5,6 +5,7 @@ import com.ktdsuniversity.edu.board.vo.BoardVO;
 import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
+import com.ktdsuniversity.edu.members.vo.MembersVO;
 
 /**
  * 상황별
@@ -19,7 +20,7 @@ public interface BoardService {
 
 	SearchResultVO findAllBoard();
 
-	boolean createNewBoard(WriteVO writeVO);
+	boolean createNewBoard(WriteVO writeVO, MembersVO loginMember);
 	
 	BoardVO findBoardByArticleId(String articleId, ReadType update);
 

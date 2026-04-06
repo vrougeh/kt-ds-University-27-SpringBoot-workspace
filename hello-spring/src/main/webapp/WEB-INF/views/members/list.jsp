@@ -12,6 +12,7 @@ pageEncoding="UTF-8"%>
 	    <div class="grid list">
 	        <h1>회원 목록</h1>
 	        <div>총 ${searchCount}개의 회원이 검색되었습니다.</div>
+	        <div class="regist"><a href="/">게시글 리스트</a></div>
 	        <table class="grid">
 		        <thead>
 		            <tr>

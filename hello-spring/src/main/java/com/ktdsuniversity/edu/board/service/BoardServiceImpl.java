@@ -20,6 +20,7 @@ import com.ktdsuniversity.edu.files.dao.FilesDao;
 import com.ktdsuniversity.edu.files.utils.MultipartFileHandler;
 import com.ktdsuniversity.edu.files.vo.request.UploadVO;
 import com.ktdsuniversity.edu.members.dao.MembersDao;
+import com.ktdsuniversity.edu.members.vo.MembersVO;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -55,7 +56,19 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public boolean createNewBoard(WriteVO writeVO) {
+	public boolean createNewBoard(WriteVO writeVO, MembersVO loginMember) {
+		
+		writeVO.setEmail(loginMember.getEmail());
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime latestLoginBlockDate = LocalDateTime.parse(loginMember.getLoginDate(), formatter);
+		System.out.println("로그인 성공 시간 : "+latestLoginBlockDate);	
+		System.out.println("비교 시간 : "+LocalDateTime.now().minusMinutes(30));
+		if(latestLoginBlockDate.isBefore(LocalDateTime.now().minusMinutes(30))) {
+			System.out.println("작성실패");
+			return false;
+		}
+		
 		
 		//첨부 파일 업로드
 		List<MultipartFile> attachFiles = writeVO.getAttachFile();

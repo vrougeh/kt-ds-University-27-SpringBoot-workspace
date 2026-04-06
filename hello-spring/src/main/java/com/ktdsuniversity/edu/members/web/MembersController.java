@@ -113,7 +113,11 @@ public class MembersController {
 	}
 
 	@GetMapping("/login")
-	public String viewLoginPage() {
+	public String viewLoginPage(HttpSession session) {
+		if(session.getAttribute("__LOGIN_DATA__") != null) {
+			System.out.println("로그인 데이터가 있습니다..");
+			return "redirect:/";
+		}
 		return "members/login";
 	}
 	
@@ -123,6 +127,7 @@ public class MembersController {
 			model.addAttribute("loginData", loginVO);
 			return "members/login";
 		}
+		
 		String userIp = request.getRemoteAddr();
 		System.out.println(userIp);
 		loginVO.setIp(userIp);
@@ -145,13 +150,13 @@ public class MembersController {
 	@GetMapping("/logout")
 	public String viewLogoutPage(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return "redirect:/";
+		return "members/login";
 	}
 	
 	@PostMapping("/logout")
 	public String doLogoutAction(HttpServletRequest request) {
-		request.getSession(true);
-		return "redirect:/";
+		request.getSession().invalidate();
+		return "members/login";
 	}
 
 
