@@ -98,8 +98,6 @@ UPDATE MEMBERS
 SELECT LOGIN_DATE
   FROM MEMBERS
  WHERE EMAIL = #{email}
-
-
 </select>
 
 </mapper>
