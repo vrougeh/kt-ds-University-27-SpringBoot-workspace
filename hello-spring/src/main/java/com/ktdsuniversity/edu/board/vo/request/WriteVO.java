@@ -21,10 +21,19 @@ public class WriteVO {
 	@NotEmpty(message = "제목은 반드시 입력해주세요.")
 	private String subject;
 	private String content;
-	@NotEmpty(message = "이메일은 반드시 입력해주세요.")
-	@Email(message = "이메일은 반드시 입력해주세요.")
 	private String email;
+	private String fileGroupId;
 	
+	
+	
+	public String getFileGroupId() {
+		return this.fileGroupId;
+	}
+
+	public void setFileGroupId(String fileGroupId) {
+		this.fileGroupId = fileGroupId;
+	}
+
 	private List<MultipartFile> attachFile;
 	
 	

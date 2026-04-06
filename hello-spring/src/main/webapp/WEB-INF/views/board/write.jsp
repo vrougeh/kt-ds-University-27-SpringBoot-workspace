@@ -28,18 +28,6 @@ pageEncoding="UTF-8"%>
           <form:errors path="subject" cssClass="validation-error" element="div" />
         </div>
 
-        <label for="email">이메일</label>
-        <div class="input-div">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="이메일을 입력하세요"
-            value="${inputData.email}"
-          />
-          <form:errors path="email" cssClass="validation-error" element="div" />
-        </div>
-
         <label for="attach-files">첨부파일</label>
         <div id="attach-files" class="attach-files">
           <input type="file" name="attachFile" />

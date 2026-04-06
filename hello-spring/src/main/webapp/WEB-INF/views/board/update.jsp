@@ -13,6 +13,8 @@ pageEncoding="UTF-8"%>
   <body>
     <h1>게시글 수정</h1>
     <form method="post" action="/update/${article.id}" enctype="multipart/form-data">
+      <input type="hidden" name="fileGroupId" value="${article.fileGroupId }" >
+      
       <div class="grid update">
         <label for="jubject">제목</label>
         <input

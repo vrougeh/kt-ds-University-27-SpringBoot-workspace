@@ -2,6 +2,8 @@ package com.ktdsuniversity.edu.board.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
 import com.ktdsuniversity.edu.files.dao.FilesDao;
 import com.ktdsuniversity.edu.files.utils.MultipartFileHandler;
 import com.ktdsuniversity.edu.files.vo.request.UploadVO;
+import com.ktdsuniversity.edu.members.dao.MembersDao;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -29,6 +32,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
 	private FilesDao filesDao;
+	
+	@Autowired
+	private MembersDao membersDao;
 	
 	@Autowired
 	private MultipartFileHandler multipartFileHandler;
@@ -50,17 +56,19 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public boolean createNewBoard(WriteVO writeVO) {
+		
+		//첨부 파일 업로드
+		List<MultipartFile> attachFiles = writeVO.getAttachFile();
+		String fileGroupId = multipartFileHandler.upload(attachFiles);
+		writeVO.setFileGroupId(fileGroupId);
+		
 		// dao => insert 요청
 		// mybatis 는 insert, update, delete를 수행했을때
 		// 영향을 받은 row의 수를 반환시킨다.
 		// 예> insert ==> insert된 row의 개수 반환
 		
 		int insertCount = this.boardDao.insertNewBoard(writeVO);
-		
-		//첨부 파일 업로드
-		List<MultipartFile> attachFiles = writeVO.getAttachFile();
-		multipartFileHandler.upload(attachFiles, writeVO.getId());
-		
+
 		System.out.println("생성된 게시글의 개수? "+ insertCount);
 		return insertCount == 1;
 	}
@@ -99,6 +107,7 @@ public class BoardServiceImpl implements BoardService{
 				new File(target).delete();
 			}
 			//파일목록을 제거한 이후에 "FILES" 테이블에서 해당 파일 정보를 모두 삭제한다
+			//TODO 수정필요 id > filegroupid
 			int deleteFileCount = this.filesDao.deleteFilesByBoardId(id);
 			System.out.println("삭제한 파일개수"+deleteFileCount);
 		}
@@ -107,7 +116,6 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public boolean updateBoardByArticleId(UpdateVO updateVO) {
-		int updateCount = this.boardDao.updateBoardById(updateVO);
 		
 		// 선택한 파일들만 삭제한다.
 		if(updateVO.getDeleteFileNum() != null && updateVO.getDeleteFileNum().size() > 0) {
@@ -121,11 +129,27 @@ public class BoardServiceImpl implements BoardService{
 			System.out.println("삭제한 파일 데디터의 수 : " + deleteCount);
 			
 		}
+		
+		
+		List<MultipartFile> attachFiles = updateVO.getAttachFile();
+		String fileGroupId = updateVO.getFileGroupId();
+		if(fileGroupId == null || fileGroupId.length() == 0) {
+			fileGroupId = this.multipartFileHandler.upload(attachFiles);
+			updateVO.setFileGroupId(fileGroupId);
+		} else {
+			this.multipartFileHandler.upload(attachFiles, updateVO.getFileGroupId());
+		}
+		
+		int updateCount = this.boardDao.updateBoardById(updateVO);
+		
+		
 		//첨부 파일 업로드
 //		List<MultipartFile> attachFiles = updateVO.getAttachFile();
-		multipartFileHandler.upload(updateVO.getAttachFile(), updateVO.getId());
+//		multipartFileHandler.upload(attachFiles,updateVO.getFileGroupId());
 		return updateCount == 1;
 	}
+
+
 
 
 }

@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.ktdsuniversity.edu.members.service.MembersService;
 import com.ktdsuniversity.edu.members.vo.MembersVO;
 import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
+import com.ktdsuniversity.edu.members.vo.request.LoginVO;
 import com.ktdsuniversity.edu.members.vo.request.RegistVO;
 import com.ktdsuniversity.edu.members.vo.response.DuplicateResultVO;
 import com.ktdsuniversity.edu.members.vo.response.SearchResultVO;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -108,12 +111,48 @@ public class MembersController {
 		boolean deleteResult = this.membersService.deleteMembersByEmail(email);
 		return "redirect:/member/list";
 	}
-	/*
-	 * /member/view/사용자아이디 ==> 회원정보 조회 하기
-	 * /member/update/사용자아이디 ==> 회원정보 수정페이지 보기
-	 * /member/update/사용자아이디 ==> 회원정보 수정 하기
-	 * /member/delete?id=사용자아이디 ==> 회원정보 삭제하기
-	 */
+
+	@GetMapping("/login")
+	public String viewLoginPage() {
+		return "members/login";
+	}
+	
+	@PostMapping("/login")
+	public String doLoginAction(@Valid @ModelAttribute LoginVO loginVO, BindingResult bindingResult, Model model, HttpServletRequest request) {
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("loginData", loginVO);
+			return "members/login";
+		}
+		String userIp = request.getRemoteAddr();
+		System.out.println(userIp);
+		loginVO.setIp(userIp);
+		
+		MembersVO member = this.membersService.findMemberByEmailAndPassword(loginVO);
+		
+		//서버의 세션을 삭제한다
+		//로그아웃
+		request.getSession().invalidate();
+		
+		//request.getSession() < httpRequestHeader 로 전달된 JSESSIONID의 객체를 반환
+		//request.getSession(true ) < 기존 JSESSIONID로 발급된 세션객체는 버리고 새로운id의 세션객체를 생성 후 반환
+		HttpSession session = request.getSession(true);
+		System.out.println("session : "+session);
+		session.setAttribute("__LOGIN_DATA__", member);
+		
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logout")
+	public String viewLogoutPage(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "redirect:/";
+	}
+	
+	@PostMapping("/logout")
+	public String doLogoutAction(HttpServletRequest request) {
+		request.getSession(true);
+		return "redirect:/";
+	}
 
 
 }
