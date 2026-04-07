@@ -1,7 +1,5 @@
 package com.ktdsuniversity.edu.board.web;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 
 
@@ -54,21 +53,13 @@ public class BoardController {
 	
 	// 게시글 등록화면 보여주는 EndPoint
 	@GetMapping("/write")
-	public String viewWritePage(HttpServletRequest request) {
-		
-		HttpSession session =  request.getSession();
-		System.out.println(session);
-		
-		if(session.getAttribute("__LOGIN_DATA__")== null) {
-			System.out.println("로그인 데이터가 없습니다.");
-			return "redirect:/";
-		}
+	public String viewWritePage() {
 		
 		return "board/write";
 	}
 	
 	@PostMapping("/write")  /*@Valid의 결과를 받아오는 파라미터 반드시 @Valid 파라미터 이후에 작성*/
-	public String doWriteAction(@Valid WriteVO writeVO, BindingResult bindingResult, Model model, HttpServletRequest request, HttpSession session) { //@ModelAttribute 생략
+	public String doWriteAction(@Valid WriteVO writeVO, BindingResult bindingResult, Model model, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) { //@ModelAttribute 생략
 		//사용자의 입력값을 검증 했을 때 에러가 있다면 
 		if(bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
@@ -76,20 +67,10 @@ public class BoardController {
 			model.addAttribute("inputData",writeVO);
 			return "board/write";
 		}
-		
-		
-		MembersVO loginMember = (MembersVO) session.getAttribute("__LOGIN_DATA__");
-		if(loginMember == null) {
-			System.out.println("로그인 데이터가 없습니다.");
-			return "redirect:/";
-		}
-		
-		System.out.println(writeVO.getSubject());
-		System.out.println(writeVO.getEmail());
-		System.out.println(writeVO.getContent());
+		writeVO.setEmail(loginMember.getEmail());
 		
 		//create update delete => 성공 or 실패 여부 반환
-		boolean createResult = this.boardService.createNewBoard(writeVO, loginMember);
+		boolean createResult = this.boardService.createNewBoard(writeVO);
 		
 		System.out.println("게시글 생성 성공?" + createResult);
 		
@@ -130,17 +111,23 @@ public class BoardController {
 	}
 	
 	@GetMapping("/update/{articleId}")
-	public String viewUpdatePage(@PathVariable String articleId, Model model) {
+	public String viewUpdatePage(@PathVariable String articleId, Model model, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
 		BoardVO data = this.boardService.findBoardByArticleId(articleId, ReadType.UPDATE);
+		
+		if(!loginMember.getEmail().equals(data.getEmail())) {
+			throw new IllegalArgumentException("email이 일치하지 않습니다");
+		}
 		model.addAttribute("article",data);
 		return "board/update";
 		
 	}
 	
 	@PostMapping("/update/{articleId}")
-	public String doUpdateAction(@PathVariable String articleId, UpdateVO updateVO) {
+	public String doUpdateAction(@PathVariable String articleId, UpdateVO updateVO, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
 		
+		System.out.println("id : "+ articleId+"/ email : "+ loginMember.getEmail());
 		updateVO.setId(articleId);
+		updateVO.setEmail(loginMember.getEmail());
 		
 		boolean updateResult = this.boardService.updateBoardByArticleId(updateVO);
 		System.out.println("수정 성공:" + updateResult);

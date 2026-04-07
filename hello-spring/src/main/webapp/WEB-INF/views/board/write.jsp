@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>게시글 작성</title>
-    <script type="text/javascript" src="/js/jquery-4.0.0.slim.min.js"></script>
-    <script type="text/javascript" src="/js/board.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/hello-spring.css" />
-  </head>
-  <body>
+<jsp:include page="/WEB-INF/views/templates/header.jsp">
+<jsp:param value="게시글 작성" name="title"/>
+<jsp:param value="<script type='text/javascript' src='/js/board.js'></script>" name="script"/>
+</jsp:include>
     <h1>게시글 작성</h1>
     <!-- form:form modelAttribute ==> form 태그 내부의 input, textarea, select 등을 컨트롤러로 보내기 위한 아이디
          보편적으로 변수의 이름(엔드포인트의) -->
@@ -48,5 +42,4 @@ pageEncoding="UTF-8"%>
         </div>
       </div>
     </form:form>
-  </body>
-</html>
+<jsp:include page="/WEB-INF/views/templates/footer.jsp"></jsp:include>

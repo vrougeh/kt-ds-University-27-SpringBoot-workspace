@@ -6,20 +6,26 @@
 
   <select id="selectBoardCount" resultType="_int">
             SELECT COUNT(ID)
-            FROM BOARD
+            FROM BOARD B
+           INNER JOIN MEMBERS M
+              ON B.EMAIL = M.EMAIL
   </select>
 
-  <select id="selectBoardList" resultType="com.ktdsuniversity.edu.board.vo.BoardVO">
-            SELECT ID
-                 , SUBJECT
-                 , CONTENT 
-                 , EMAIL 
-                 , VIEW_CNT 
-                 , TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT 
-                 , TO_CHAR(MDFY_DT , 'YYYY-MM-DD HH24:MI:SS') AS MDFY_DT 
-                 , FILE_NAME 
-                 , ORIGIN_FILE_NAME 
-              FROM BOARD
+  <select id="selectBoardList" resultMap="BoardVOMap">
+            SELECT B.ID
+                 , B.SUBJECT
+                 , B.CONTENT 
+                 , B.EMAIL 
+                 , B.VIEW_CNT 
+                 , TO_CHAR(B.CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT 
+                 , TO_CHAR(B.MDFY_DT , 'YYYY-MM-DD HH24:MI:SS') AS MDFY_DT 
+                 , B.FILE_NAME 
+                 , B.ORIGIN_FILE_NAME 
+                 , M.NAME
+                 , M.REGIST_DATE
+              FROM BOARD B
+             INNER JOIN MEMBERS M
+                ON B.EMAIL = M.EMAIL
              ORDER BY ID DESC
   </select>
   
@@ -68,19 +74,23 @@
 	<result column="FILE_NAME" property="fileName"/>
 	<result column="ORIGIN_FILE_NAME" property="originFileName"/>
 	 -->
+
+	<association property="membersVO" javaType="com.ktdsuniversity.edu.members.vo.MembersVO" autoMapping="true">
+	    <id column="EMAIL" property="email"/>
+	</association>
 	<!-- BoardVO에 있는 list는 <collection> 태그 이용 -->
 	<collection property="files" javaType="list" ofType="com.ktdsuniversity.edu.files.vo.FilesVO" autoMapping="true">
-	<!-- PK -->
-	<id column="FILE_NUM" property="fileNum"/>
-	<id column="FILE_GROUP_ID" property="fileGroupId"/>
-	<!-- Columns -->
-	<!-- 
-	<result column="OBFUSCATE_NAME" property="obfuscateName"/>
-	<result column="DISPLAY_NAME" property="displayName"/>
-	<result column="EXTEND_NAME" property="extendName"/>
-	<result column="FILE_LENGTH" property="fileLength"/>
-	<result column="FILE_PATH" property="filePath"/>
-	 -->
+		<!-- PK -->
+		<id column="FILE_NUM" property="fileNum"/>
+		<id column="FILE_GROUP_ID" property="fileGroupId"/>
+		<!-- Columns -->
+		<!-- 
+		<result column="OBFUSCATE_NAME" property="obfuscateName"/>
+		<result column="DISPLAY_NAME" property="displayName"/>
+		<result column="EXTEND_NAME" property="extendName"/>
+		<result column="FILE_LENGTH" property="fileLength"/>
+		<result column="FILE_PATH" property="filePath"/>
+		 -->
 	</collection>
 </resultMap>
 
@@ -104,7 +114,11 @@
 		     , F.EXTEND_NAME
 		     , F.FILE_LENGTH
 		     , F.FILE_PATH
+		     , M.NAME
+		     , TO_CHAR(M.REGIST_DATE, 'YYYY-MM-DD HH24:MI:SS') AS REGIST_DATE
 		  FROM BOARD B
+		 INNER JOIN MEMBERS M
+		    ON B.EMAIL = M.EMAIL
 		  LEFT OUTER JOIN (SELECT F.FILE_NUM
 		                        , FG.FILE_GROUP_ID 
 		                        , F.OBFUSCATE_NAME 
@@ -114,7 +128,7 @@
 		                        , F.FILE_PATH 
 		                     FROM FILES_GROUP FG
 		                    INNER JOIN FILES F
-		                       ON FG.FILE_GROUP_ID = F.FILE_GROUP_ID)F
+		                       ON FG.FILE_GROUP_ID = F.FILE_GROUP_ID) F
 		    ON B.FILE_GROUP_ID = F.FILE_GROUP_ID 
          WHERE B.ID = #{_parameter}
     </select>

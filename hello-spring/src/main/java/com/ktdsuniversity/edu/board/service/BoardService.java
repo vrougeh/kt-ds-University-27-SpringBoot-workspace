@@ -20,7 +20,7 @@ public interface BoardService {
 
 	SearchResultVO findAllBoard();
 
-	boolean createNewBoard(WriteVO writeVO, MembersVO loginMember);
+	boolean createNewBoard(WriteVO writeVO);
 	
 	BoardVO findBoardByArticleId(String articleId, ReadType update);
 

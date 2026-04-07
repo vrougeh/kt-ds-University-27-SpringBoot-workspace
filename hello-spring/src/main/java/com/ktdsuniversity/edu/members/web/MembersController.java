@@ -25,6 +25,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 
 @Controller
@@ -113,11 +114,7 @@ public class MembersController {
 	}
 
 	@GetMapping("/login")
-	public String viewLoginPage(HttpSession session) {
-		if(session.getAttribute("__LOGIN_DATA__") != null) {
-			System.out.println("로그인 데이터가 있습니다..");
-			return "redirect:/";
-		}
+	public String viewLoginPage() {
 		return "members/login";
 	}
 	
@@ -141,23 +138,39 @@ public class MembersController {
 		//request.getSession() < httpRequestHeader 로 전달된 JSESSIONID의 객체를 반환
 		//request.getSession(true ) < 기존 JSESSIONID로 발급된 세션객체는 버리고 새로운id의 세션객체를 생성 후 반환
 		HttpSession session = request.getSession(true);
-		System.out.println("session : "+session);
+		System.out.println("session : "+session.getId());
 		session.setAttribute("__LOGIN_DATA__", member);
 		
 		return "redirect:/";
 	}
 	
 	@GetMapping("/logout")
-	public String viewLogoutPage(HttpServletRequest request) {
-		request.getSession().invalidate();
+	public String viewLogoutPage(HttpSession session) {
+		session.invalidate();
 		return "members/login";
 	}
 	
-	@PostMapping("/logout")
-	public String doLogoutAction(HttpServletRequest request) {
-		request.getSession().invalidate();
-		return "members/login";
+	
+	@GetMapping("/delete-me")
+	public String doDeleteAction(HttpSession session, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
+		
+		if(loginMember == null) {
+			return "redirect:/";
+		}
+		
+		//로그인 세션에서 회원의 이메일을 가져온다
+		String memberEmail = loginMember.getEmail();
+		//members 테이블에서 회원의 정보를 이메일을 이용해 삭제한다
+		boolean delete = this.membersService.deleteMembersByEmail(memberEmail);
+		if(delete) {
+			//현재로그인된 사용자를 로그아웃 시킨다
+			session.invalidate();
+			//"members/deletesuccess" 페이지를 보여준다.
+			return "members/deletesuccess";
+			//"탈퇴가 완료됐습니다."
+		}
+		
+		return "members/deletefail";
 	}
-
 
 }

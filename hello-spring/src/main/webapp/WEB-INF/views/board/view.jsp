@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>게시글 조회: 게시글 아이디</title>
-    <link rel="stylesheet" type="text/css" href="/css/hello-spring.css" />
-  </head>
-  <body>
+<jsp:include page="/WEB-INF/views/templates/header.jsp">
+    <jsp:param value="게시글 조회 : ${article.id}"  name="title"/>
+</jsp:include>
     <h1>게시글 내용 조회</h1>
     <div class="grid view">
       <span>아이디</span>
@@ -16,9 +11,9 @@
 
       <span>제목</span>
       <div>${article.subject}</div>
-
-      <span>이메일</span>
-      <div>${article.email}</div>
+      
+      <span>이름</span>
+      <div>${article.membersVO.name} (가입일 ${article.membersVO.registDate} )</div>
 
       <span>조회수</span>
       <div>${article.viewCnt}</div>
@@ -47,10 +42,10 @@
 
       <div class="btn-group">
         <div class="right-align">
-            <a href="/update/${article.id}">수정</a>
-            <a href="/delete?id=${article.id}">삭제</a>
+            <c:if test="${article.email eq sessionScope.__LOGIN_DATA__.email }">
+	            <a href="/update/${article.id}">수정</a>
+	            <a href="/delete?id=${article.id}">삭제</a>
+            </c:if>
         </div>
       </div>
-    </div>
-  </body>
-</html>
+<jsp:include page="/WEB-INF/views/templates/footer.jsp"></jsp:include>

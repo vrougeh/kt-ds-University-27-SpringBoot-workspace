@@ -68,6 +68,13 @@ public class MembersServiceImpl implements MembersService {
 
 	@Override
 	public boolean updateMembersByEmail(UpdateVO updateVO) {
+		String newSalt = SHA256Util.generateSalt();
+		String userPassword = updateVO.getPassword();
+		//사용자가 입력한 비밀번호를 newSalt를 이용해 암호화
+		//비밀번호화 newSalt의 값이 일치하면, 항상 같은 값의 암호화 결과가 생성된다.
+		userPassword = SHA256Util.getEncrypt(userPassword, newSalt);
+		updateVO.setSalt(newSalt);
+		updateVO.setPassword(userPassword);
 		int updateCount = this.membersDao.updateMembersByEmail(updateVO);
 		return updateCount==1;
 	}

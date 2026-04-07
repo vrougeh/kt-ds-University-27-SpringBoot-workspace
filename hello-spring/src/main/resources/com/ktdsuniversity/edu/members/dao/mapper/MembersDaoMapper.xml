@@ -66,6 +66,8 @@ DELETE FROM SPRING_BOOT.MEMBERS
 UPDATE SPRING_BOOT.MEMBERS
    SET NAME=#{name}
      , PASSWORD=#{password}
+     , SALT = #{salt}
+     , LATEST_PASSWORD_CHANGE_DATE = SYSDATE
 WHERE EMAIL=#{email}
 </update>
 

@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib prefix="form"
 uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>회원가입</title>
-    <script type="text/javascript" src="/js/jquery-4.0.0.slim.min.js"></script>
-    <script type="text/javascript" src="/js/members.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/hello-spring.css" />
-  </head>
-  <body>
+<jsp:include page="/WEB-INF/views/templates/header.jsp">
+	<jsp:param value="회원가입"  name="title"/>
+	<jsp:param value="<script type='text/javascript' src='/js/members.js'></script>" name="script"/>
+</jsp:include>
     <h1>회원가입</h1>
+    <div><a href="/">홈</a></div>
     <form:form modelAttribute="registVO" method="post" action="/regist">
       <div class="grid regist">
         <label for="email">이메일</label>
@@ -72,5 +67,4 @@ uri="http://www.springframework.org/tags/form" %>
         </div>
       </div>
     </form:form>
-  </body>
-</html>
+<jsp:include page="/WEB-INF/views/templates/footer.jsp"></jsp:include>

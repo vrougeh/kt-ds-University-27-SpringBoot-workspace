@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.board.vo;
 import java.util.List;
 
 import com.ktdsuniversity.edu.files.vo.FilesVO;
+import com.ktdsuniversity.edu.members.vo.MembersVO;
 
 import jakarta.validation.constraints.Size;
 
@@ -19,6 +20,8 @@ public class BoardVO {
 	private String fileName;
 	private String originFileName;
 	private String fileGroupId;
+	
+	private MembersVO membersVO;
 	
 	private List<FilesVO> files;
 	
@@ -76,6 +79,13 @@ public class BoardVO {
 	public void setOriginFileName(String originFileName) {
 		this.originFileName = originFileName;
 	}
+
+	public String getFileGroupId() {
+		return this.fileGroupId;
+	}
+	public void setFileGroupId(String fileGroupId) {
+		this.fileGroupId = fileGroupId;
+	}
 	
 	public List<FilesVO> getFiles() {
 		return this.files;
@@ -83,12 +93,12 @@ public class BoardVO {
 	public void setFiles(List<FilesVO> files) {
 		this.files = files;
 	}
-	
-	public String getFileGroupId() {
-		return this.fileGroupId;
+
+	public MembersVO getMembersVO() {
+		return this.membersVO;
 	}
-	public void setFileGroupId(String fileGroupId) {
-		this.fileGroupId = fileGroupId;
+	public void setMembersVO(MembersVO membersVO) {
+		this.membersVO = membersVO;
 	}
 
 }
