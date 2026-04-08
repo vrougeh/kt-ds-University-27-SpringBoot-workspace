@@ -27,15 +27,16 @@ public class HelloSpringConfiguration implements WebMvcConfigurer{
 		
 		registry.addInterceptor(sessionInterceptor)
 		        .addPathPatterns("/**")// 모든 URL 대상으로 sessionInterceptor를 수행해라
-		        .excludePathPatterns("/regist/check/duplicate/**" //회원가입 이메일 중복 검사
-		        		             , "/regist" //회원가입 페이지 & 처
-		        		             , "/login" //로그인 페이지 & 처리
-		        		             ,"/js/**" //static resources
-		        		             ,"/css/**" //static resources
-		        		             ,"/image/**" //static resources
-		        		             ,"/" //게시글 목록 조회
-		        		             ,"/view/**" //게시글 내용조회
-		        		             ,"/file/**" //첨부파일 다운로드
+		        .excludePathPatterns("/regist/check/duplicate/**", //회원가입 이메일 중복 검사
+		        		             "/regist", //회원가입 페이지 & 처
+		        		             "/login", //로그인 페이지 & 처리
+		        		             "/js/**", //static resources
+		        		             "/css/**", //static resources
+		        		             "/image/**", //static resources
+		        		             "/", //게시글 목록 조회
+		        		             "/view/**", //게시글 내용조회
+		        		             "/file/**", //첨부파일 다운로드
+		        		             "/error" //에러 내용이 보여지는 페이지 추후 삭제
 		        		             ) //sessionInterceptor가 적용되지 않을 URL 명시
 		        ;
 		IllegalAccessInterceptor illegalAccessInterceptor = new IllegalAccessInterceptor();

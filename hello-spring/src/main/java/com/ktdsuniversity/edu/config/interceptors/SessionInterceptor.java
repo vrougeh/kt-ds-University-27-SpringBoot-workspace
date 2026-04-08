@@ -51,7 +51,7 @@ public class SessionInterceptor implements HandlerInterceptor{
 		//세션을 가져온다
 		HttpSession session = request.getSession();
 		//세션이 있는지 검사한다
-		if(session.getAttribute("__LOGOIN_DATA__")== null) {
+		if(session.getAttribute("__LOGIN_DATA__")== null) {
 			//세션이 없으면 컨트롤러는 실행시키지 않는다
 			//대신 사용자에게 로그인 페이지를 보여준다 URL은 변동죄지 않아야 한다
 			String loginPagePath = "/WEB-INF/views/members/login.jsp";

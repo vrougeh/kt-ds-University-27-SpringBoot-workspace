@@ -2,6 +2,8 @@ package com.ktdsuniversity.edu.board.web;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,9 @@ import com.ktdsuniversity.edu.board.vo.BoardVO;
 import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
+import com.ktdsuniversity.edu.exceptions.HelloSpringException;
 import com.ktdsuniversity.edu.members.vo.MembersVO;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 public class BoardController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	/**
 	 * 빈 컨테이너에 들어있는 객체 중 타입이 일치하는 객체를 할당 받는다
 	 */
@@ -54,7 +57,6 @@ public class BoardController {
 	// 게시글 등록화면 보여주는 EndPoint
 	@GetMapping("/write")
 	public String viewWritePage() {
-		
 		return "board/write";
 	}
 	
@@ -62,7 +64,8 @@ public class BoardController {
 	public String doWriteAction(@Valid WriteVO writeVO, BindingResult bindingResult, Model model, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) { //@ModelAttribute 생략
 		//사용자의 입력값을 검증 했을 때 에러가 있다면 
 		if(bindingResult.hasErrors()) {
-			System.out.println(bindingResult.getAllErrors());
+			logger.debug("{}",bindingResult.getAllErrors());
+//			System.out.println(bindingResult.getAllErrors());
 			//브라우저에게 "board/write"페이지를 보여주도록하고 해당페이지는 사용자가 입력한 값을 전달한다
 			model.addAttribute("inputData",writeVO);
 			return "board/write";
@@ -71,12 +74,13 @@ public class BoardController {
 		
 		//create update delete => 성공 or 실패 여부 반환
 		boolean createResult = this.boardService.createNewBoard(writeVO);
-		
-		System.out.println("게시글 생성 성공?" + createResult);
+		logger.debug("게시글 생성 성공? {}", createResult);
+//		System.out.println("게시글 생성 성공?" + createResult);
 		
 		if (!createResult) {
 	        // 시간이 초과되었거나 등록에 실패한 경우
-			System.out.println("시간이 초과되었습니다.");
+			logger.debug("시간이 초과되었습니다.");
+//			System.out.println("시간이 초과되었습니다.");
 	        return "redirect:/";
 	    }
 		
@@ -105,7 +109,8 @@ public class BoardController {
 	public String doDeleteAction(@RequestParam String id) {
 		
 		boolean deleteResult = this.boardService.deleteBoardByArticleId(id);
-		System.out.println("삭제 결과?"+deleteResult);
+		logger.debug("삭제 결과? {}", deleteResult);
+//		System.out.println("삭제 결과?"+deleteResult);
 		return "redirect:/";
 		
 	}
@@ -114,8 +119,9 @@ public class BoardController {
 	public String viewUpdatePage(@PathVariable String articleId, Model model, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
 		BoardVO data = this.boardService.findBoardByArticleId(articleId, ReadType.UPDATE);
 		
+		//TODO 게시글의 이메일과 세션의 이메일을 비교할 때에는 항상 serviceimpl에서 한다.
 		if(!loginMember.getEmail().equals(data.getEmail())) {
-			throw new IllegalArgumentException("email이 일치하지 않습니다");
+			throw new HelloSpringException("잘못된 접근입니다.", "errors/403");
 		}
 		model.addAttribute("article",data);
 		return "board/update";
@@ -124,13 +130,14 @@ public class BoardController {
 	
 	@PostMapping("/update/{articleId}")
 	public String doUpdateAction(@PathVariable String articleId, UpdateVO updateVO, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
-		
-		System.out.println("id : "+ articleId+"/ email : "+ loginMember.getEmail());
+		logger.debug("id : {} / email : {}", articleId, loginMember.getEmail());
+//		System.out.println("id : "+ articleId+"/ email : "+ loginMember.getEmail());
 		updateVO.setId(articleId);
 		updateVO.setEmail(loginMember.getEmail());
 		
 		boolean updateResult = this.boardService.updateBoardByArticleId(updateVO);
-		System.out.println("수정 성공:" + updateResult);
+		logger.debug("수정 성공: {}", updateResult);
+//		System.out.println("수정 성공:" + updateResult);
 		
 		return "redirect:/view/"+articleId;
 	}

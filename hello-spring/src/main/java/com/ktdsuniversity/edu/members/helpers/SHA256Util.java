@@ -6,10 +6,15 @@ import java.security.NoSuchAlgorithmException;
 
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * SHA-256 암호화
  */
 public class SHA256Util {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SHA256Util.class);
 	/**
 	 * SHA-256 암호화 함
 	 * 
@@ -44,7 +49,8 @@ public class SHA256Util {
 			}
 			result = sb.toString();
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			logger.error("암호화 중 에러 발생!",e);
 		}
 		return result;
 	}

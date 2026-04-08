@@ -1,5 +1,6 @@
 package com.ktdsuniversity.edu.members.web;
 
+import java.lang.System.Logger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +120,12 @@ public class MembersController {
 	}
 	
 	@PostMapping("/login")
-	public String doLoginAction(@Valid @ModelAttribute LoginVO loginVO, BindingResult bindingResult, Model model, HttpServletRequest request) {
+	public String doLoginAction(@Valid @ModelAttribute LoginVO loginVO,
+			BindingResult bindingResult, 
+			Model model, 
+			@RequestParam(required = false, defaultValue = "/") String go,
+			HttpServletRequest request
+			) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("loginData", loginVO);
 			return "members/login";
@@ -140,8 +146,8 @@ public class MembersController {
 		HttpSession session = request.getSession(true);
 		System.out.println("session : "+session.getId());
 		session.setAttribute("__LOGIN_DATA__", member);
-		
-		return "redirect:/";
+//		System.out.println("go??????????????????????????"+go);
+		return "redirect:" + go;
 	}
 	
 	@GetMapping("/logout")
