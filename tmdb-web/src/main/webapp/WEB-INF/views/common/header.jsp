@@ -8,6 +8,7 @@ pageEncoding="UTF-8"%>
 
   <nav>
     <ul>
+      <li><a href="/actor/list">배우 목록</a></li>
       <li><a href="/list">영화 목록</a></li>
       <li><a href="/write">영화 등록</a></li>
       <li><a href="/member">회원 목록</a></li>

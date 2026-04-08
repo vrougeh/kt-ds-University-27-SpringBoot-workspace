@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.actor.dao.ActorDao">
+
+<select id="selectActorCount" resultType="_int">
+SELECT COUNT(ACTOR_ID)
+  FROM TMDB.ACTOR
+</select>
+
+<select id="selectActorList" resultType="com.ktdsuniversity.edu.actor.vo.ActorVO">
+SELECT ACTOR_ID
+     , ACTOR_NAME
+     , ACTOR_PROFILE_URL
+  FROM TMDB.ACTOR
+</select>
+
+
+</mapper>
