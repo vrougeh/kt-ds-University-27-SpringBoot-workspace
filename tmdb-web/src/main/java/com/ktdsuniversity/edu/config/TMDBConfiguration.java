@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //spring-boot-starter-validation 동작 활성화 시키기
 //application.yml의 mvc관련 설정들이 모두 무시됨
 @EnableWebMvc
-public class HelloSpringConfiguration implements WebMvcConfigurer{
+public class TMDBConfiguration implements WebMvcConfigurer{
 
 
 	//configureViewResolvers 설정
