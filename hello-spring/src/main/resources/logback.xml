@@ -20,7 +20,6 @@
       <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%line -%kvp- %msg%n</pattern>
     </encoder>
   </appender>
-<!-- 모든 로그를 info 이하(info,warn,error) 수준만 출력한다 -->
   <root level="info">
     <appender-ref ref="ConsoleOutput" />
     <appender-ref ref="FILE" />

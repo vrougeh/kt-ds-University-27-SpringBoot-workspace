@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.config.interceptors;
 
+import java.io.PrintWriter;
+
 import org.jspecify.annotations.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,6 +54,24 @@ public class SessionInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 		//세션이 있는지 검사한다
 		if(session.getAttribute("__LOGIN_DATA__")== null) {
+			
+			String pathName = request.getRequestURI();
+			if(pathName.startsWith("/api/")) {
+				String jsonResult = "{"
+									+ "	\"status\": 403,"
+									+ "	\"error\": \"권한이 부족합니다\""
+									+ "}";
+				//response data의 encoding을 UTF-8로 변경
+				response.setCharacterEncoding("UTF-8");
+				
+				//response 되는 데이터의 타입을 "application/json"으로 세팅
+				response.setContentType("application/json");
+				//클라이언트에게 데이터 전송하는 객체
+				PrintWriter writer =response.getWriter();
+				writer.write(jsonResult);
+				writer.flush();
+				return false;
+			}
 			//세션이 없으면 컨트롤러는 실행시키지 않는다
 			//대신 사용자에게 로그인 페이지를 보여준다 URL은 변동죄지 않아야 한다
 			String loginPagePath = "/WEB-INF/views/members/login.jsp";
