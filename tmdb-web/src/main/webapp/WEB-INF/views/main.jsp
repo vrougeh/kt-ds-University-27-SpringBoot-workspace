@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Movie main</title>
-    <link rel="stylesheet" type="text/css" href="/css/tmdb" />
+    
   </head>
   <body>
   
