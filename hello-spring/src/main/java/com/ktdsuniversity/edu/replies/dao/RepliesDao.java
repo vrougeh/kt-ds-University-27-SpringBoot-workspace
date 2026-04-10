@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ktdsuniversity.edu.replies.vo.RepliesVO;
 import com.ktdsuniversity.edu.replies.vo.request.CreateVO;
+import com.ktdsuniversity.edu.replies.vo.request.UpdateVO;
 
 @Mapper
 public interface RepliesDao {
@@ -17,5 +18,11 @@ public interface RepliesDao {
 	int selectRepliesCountByArticleId(String articleId);
 
 	List<RepliesVO> selectRepliesByArticleId(String articleId);
+
+	int updateReplyRecommendByReplyId(String id);
+
+	int deleteReplyByReplyId(String id);
+
+	int updateReplyByReplyId(UpdateVO updateVO);
 
 }

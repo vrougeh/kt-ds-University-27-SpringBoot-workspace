@@ -147,7 +147,7 @@
          WHERE ID = #{_parameter}
     </delete>
     
-    <update id="updateBoardById" parameterType="com.ktdsuniversity.edu.board.vo.request.UpdateVO">
+    <update id="updateBoardById" parameterType="com.ktdsuniversity.edu.files.vo.request.SearchFilesGroupVO">
     UPDATE SPRING_BOOT.BOARD
        SET SUBJECT= #{subject}
          , CONTENT=#{content}

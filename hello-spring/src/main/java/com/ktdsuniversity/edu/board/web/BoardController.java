@@ -116,13 +116,9 @@ public class BoardController {
 	}
 	
 	@GetMapping("/update/{articleId}")
-	public String viewUpdatePage(@PathVariable String articleId, Model model, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
+	public String viewUpdatePage(@PathVariable String articleId, Model model) {
 		BoardVO data = this.boardService.findBoardByArticleId(articleId, ReadType.UPDATE);
-		
-		//TODO 게시글의 이메일과 세션의 이메일을 비교할 때에는 항상 serviceimpl에서 한다.
-		if(!loginMember.getEmail().equals(data.getEmail())) {
-			throw new HelloSpringException("잘못된 접근입니다.", "errors/403");
-		}
+
 		model.addAttribute("article",data);
 		return "board/update";
 		

@@ -101,6 +101,25 @@
 		  START WITH R.PARENT_REPLY_ID IS NULL
 		CONNECT BY PRIOR R.ID = R.PARENT_REPLY_ID 
     </select>
+    
+    <update id="updateReplyRecommendByReplyId" parameterType="string">
+        UPDATE SPRING_BOOT.REPLIES
+		   SET RECOMMEND_CNT = RECOMMEND_CNT + 1
+		WHERE ID= #{_parameter}
+    </update>
+    
+    <delete id="deleteReplyByReplyId" parameterType="string" >
+    DELETE FROM SPRING_BOOT.REPLIES
+     WHERE ID=#{__parameter}
+    </delete>
+    
+    <update id="updateReplyByReplyId" parameterType="com.ktdsuniversity.edu.replies.vo.request.UpdateVO">
+        UPDATE SPRING_BOOT.REPLIES
+       SET REPLY= #{content}
+         , FILE_GROUP_ID = #{fileGroupId}
+         , MDFY_DT= SYSDATE
+    WHERE ID=#{replyId}
+    </update>
 
 </mapper>
 

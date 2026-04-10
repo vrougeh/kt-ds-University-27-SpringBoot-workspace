@@ -16,10 +16,11 @@ import com.ktdsuniversity.edu.board.vo.BoardVO;
 import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
+import com.ktdsuniversity.edu.common.utils.SessionUtils;
 import com.ktdsuniversity.edu.exceptions.HelloSpringException;
 import com.ktdsuniversity.edu.files.dao.FilesDao;
 import com.ktdsuniversity.edu.files.utils.MultipartFileHandler;
-
+import com.ktdsuniversity.edu.files.vo.request.SearchFilesGroupVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -68,8 +69,7 @@ public class BoardServiceImpl implements BoardService {
 		// 예> insert ==> insert된 row의 개수 반환
 
 		int insertCount = this.boardDao.insertNewBoard(writeVO);
-		
-		
+
 		logger.debug("생성된 게시글의 개수? {}", insertCount);
 //		System.out.println("생성된 게시글의 개수? "+ insertCount);
 		return insertCount == 1;
@@ -79,23 +79,29 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVO findBoardByArticleId(String articleId, ReadType readType) {
 
-		if (readType == ReadType.VIEW) {
-			// 1. 조회수 증가.
-			int updateCount = this.boardDao.updateViewCntIncreaseById(articleId);
-			logger.debug("조회수가 증가된 게시글의 수: {} ", updateCount);
-//			System.out.println("조회수가 증가된 게시글의 수: " + updateCount);
+		BoardVO board = this.boardDao.selectBoardById(articleId);
+		logger.debug("email : {}", board.getEmail());
+		if (SessionUtils.isMineResource(board.getEmail())) {
+			if (readType == ReadType.VIEW) {
+				// 1. 조회수 증가.
+				int updateCount = this.boardDao.updateViewCntIncreaseById(articleId);
+				logger.debug("조회수가 증가된 게시글의 수: {} ", updateCount);
+//				System.out.println("조회수가 증가된 게시글의 수: " + updateCount);
 
-			if (updateCount == 0) {
-				// 존재하지 않는 게시글을 조회하려 했다.
-				throw new HelloSpringException("존재하지 않는 게시글입니다.", "errors/404");
+				if (updateCount == 0) {
+					// 존재하지 않는 게시글을 조회하려 했다.
+					throw new HelloSpringException("존재하지 않는 게시글입니다.", "errors/404");
+				}
 			}
+		} else {
+			throw new HelloSpringException("잘못된 접근입니다.", "errors/403");
 		}
 
 		// 2. 게시글 조회.
-		BoardVO board = this.boardDao.selectBoardById(articleId);
+		BoardVO newboard = this.boardDao.selectBoardById(articleId);
 
 		// 조회한 게시글을 반환.
-		return board;
+		return newboard;
 	}
 
 	@Transactional
@@ -126,12 +132,15 @@ public class BoardServiceImpl implements BoardService {
 		// 선택한 파일들만 삭제한다.
 		if (updateVO.getDeleteFileNum() != null && updateVO.getDeleteFileNum().size() > 0) {
 			// 선택한 파일들의 정보를 조회 --> 파일경로 > 실제파일 제거
-			List<String> deleteTargets = this.filesDao.selectFilePathByFileGroupIdAndFileNums(updateVO);
+			SearchFilesGroupVO searchFilesGroupVO = new SearchFilesGroupVO();
+			searchFilesGroupVO.setDeleteFileNum(updateVO.getDeleteFileNum());
+			searchFilesGroupVO.setFileGroupId(updateVO.getFileGroupId());
+			List<String> deleteTargets = this.filesDao.selectFilePathByFileGroupIdAndFileNums(searchFilesGroupVO);
 			for (String target : deleteTargets) {
 				new File(target).delete();
 			}
 			// 선택한 파일들을 FILES 테이블에서 제거
-			int deleteCount = this.filesDao.deleteFilesByFileGroupIdAndFileNums(updateVO);
+			int deleteCount = this.filesDao.deleteFilesByFileGroupIdAndFileNums(searchFilesGroupVO);
 			logger.debug("삭제한 파일 데디터의 수 : {}", deleteCount);
 //			System.out.println("삭제한 파일 데디터의 수 : " + deleteCount);
 

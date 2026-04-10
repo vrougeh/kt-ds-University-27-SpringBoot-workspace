@@ -21,7 +21,10 @@ import com.ktdsuniversity.edu.members.vo.MembersVO;
 import com.ktdsuniversity.edu.replies.service.RepliesService;
 import com.ktdsuniversity.edu.replies.vo.RepliesVO;
 import com.ktdsuniversity.edu.replies.vo.request.CreateVO;
+import com.ktdsuniversity.edu.replies.vo.request.UpdateVO;
+import com.ktdsuniversity.edu.replies.vo.response.RecommendResultVO;
 import com.ktdsuniversity.edu.replies.vo.response.SearchResultVO;
+import com.ktdsuniversity.edu.replies.vo.response.UpdateResultVO;
 
 import jakarta.validation.Valid;
 
@@ -32,14 +35,42 @@ public class RepliesController {
 
 	@Autowired
 	private RepliesService repliesService;
-	
+
+	@ResponseBody
+	@PostMapping("/api/replies/update/{replyId}")
+	public UpdateResultVO doUpdateReplyByReplyId(@Valid UpdateVO updateVO, @PathVariable String replyId,
+			BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			List<FieldError> errors = bindingResult.getFieldErrors();
+			throw new HelloSpringApiException("파라미터가 충분하지 않습니다.", HttpStatus.BAD_REQUEST.value(), errors);
+		}
+		updateVO.setReplyId(replyId);
+		UpdateResultVO updateResult = this.repliesService.updateReply(updateVO);
+		return updateResult;
+	}
+
+	@ResponseBody
+	@GetMapping("/api/replies/delete/{id}")
+	public RepliesVO doDeleteReplyByReplyId(@PathVariable String id) {
+		RepliesVO deleteResult = this.repliesService.deleteReplyByReplyId(id);
+		return deleteResult;
+	}
+
+	@ResponseBody
+	@GetMapping("/api/replies/recommend/{id}")
+	public RecommendResultVO  doRecommendReplyAction(@PathVariable String replyId) {
+		RecommendResultVO  recommandResult = this.repliesService.updateRecommendReplyByReplyId(replyId);
+		logger.debug("recommandResult : {}", recommandResult);
+		return recommandResult;
+	}
+
 	@ResponseBody
 	@GetMapping("/api/replies/{articleId}")
-	public SearchResultVO getRepliesList(@PathVariable String articleId){
+	public SearchResultVO getRepliesList(@PathVariable String articleId) {
 		SearchResultVO searchResult = this.repliesService.findRepliesByArticleId(articleId);
 		return searchResult;
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/api/replies-with-file")
 	public RepliesVO doCreateNewReplyWithFileAction(@Valid CreateVO createVO, BindingResult bindingResult,
