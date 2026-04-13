@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ktdsuniversity.edu.board.enums.ReadType;
 import com.ktdsuniversity.edu.board.service.BoardService;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.request.SearchListVO;
 import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
@@ -39,10 +41,11 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	//192.168.211.28:8080/?pageNo=&listSize=&searchType=&searchKeyword=
 	@GetMapping("/")
-	public String viewListPage(Model model) {
+	public String viewListPage(Model model,@ModelAttribute SearchListVO searchListVO ) {
 		
-		SearchResultVO searchResult = this.boardService.findAllBoard();
+		SearchResultVO searchResult = this.boardService.findAllBoard(searchListVO);
 		
 		//게시글의 목록을 조회
 		List<BoardVO> list = searchResult.getResult();
@@ -50,6 +53,7 @@ public class BoardController {
 		int searchCount = searchResult.getCount();
 		model.addAttribute("searchResult", list);
 		model.addAttribute("searchCount", searchCount);
+		model.addAttribute("pagenation",searchListVO);
 		
 		return "board/list";
 	}
@@ -116,10 +120,13 @@ public class BoardController {
 	}
 	
 	@GetMapping("/update/{articleId}")
-	public String viewUpdatePage(@PathVariable String articleId, Model model) {
+	public String viewUpdatePage(@PathVariable String articleId, Model model, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
 		BoardVO data = this.boardService.findBoardByArticleId(articleId, ReadType.UPDATE);
 
 		model.addAttribute("article",data);
+		if (!loginMember.getEmail().equals(data.getEmail())) {
+			throw new HelloSpringException("잘못된 접근입니다.", "errors/403");
+		}
 		return "board/update";
 		
 	}

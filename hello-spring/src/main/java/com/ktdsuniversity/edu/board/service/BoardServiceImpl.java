@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktdsuniversity.edu.board.dao.BoardDao;
 import com.ktdsuniversity.edu.board.enums.ReadType;
 import com.ktdsuniversity.edu.board.vo.BoardVO;
+import com.ktdsuniversity.edu.board.vo.request.SearchListVO;
 import com.ktdsuniversity.edu.board.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.board.vo.request.WriteVO;
 import com.ktdsuniversity.edu.board.vo.response.SearchResultVO;
@@ -40,12 +41,15 @@ public class BoardServiceImpl implements BoardService {
 	private MultipartFileHandler multipartFileHandler;
 
 	@Override
-	public SearchResultVO findAllBoard() {
+	public SearchResultVO findAllBoard(SearchListVO searchListVO) {
 		// 게시글 개수조회
-		int count = this.boardDao.selectBoardCount();
+		int count = this.boardDao.selectBoardCount(searchListVO);
+		
+		// 몇개의 페이지가 필요한지 계산
+		searchListVO.computePagenation(count);
 
 		// 게시글 목록조회
-		List<BoardVO> list = this.boardDao.selectBoardList();
+		List<BoardVO> list = this.boardDao.selectBoardList(searchListVO);
 
 		SearchResultVO result = new SearchResultVO();
 		result.setResult(list);
@@ -81,7 +85,7 @@ public class BoardServiceImpl implements BoardService {
 
 		BoardVO board = this.boardDao.selectBoardById(articleId);
 		logger.debug("email : {}", board.getEmail());
-		if (SessionUtils.isMineResource(board.getEmail())) {
+//		if (SessionUtils.isMineResource(board.getEmail())) {
 			if (readType == ReadType.VIEW) {
 				// 1. 조회수 증가.
 				int updateCount = this.boardDao.updateViewCntIncreaseById(articleId);
@@ -93,9 +97,9 @@ public class BoardServiceImpl implements BoardService {
 					throw new HelloSpringException("존재하지 않는 게시글입니다.", "errors/404");
 				}
 			}
-		} else {
-			throw new HelloSpringException("잘못된 접근입니다.", "errors/403");
-		}
+//		} else {
+//			throw new HelloSpringException("잘못된 접근입니다.", "errors/403");
+//		}
 
 		// 2. 게시글 조회.
 		BoardVO newboard = this.boardDao.selectBoardById(articleId);

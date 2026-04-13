@@ -136,6 +136,7 @@ table.grid>thead>tr>th, table.grid>tbody>tr>td {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	text-align: center;
 }
 
 table.grid>tbody>tr>td>a {
@@ -367,3 +368,18 @@ div.login {
 	align-self: flex-end;
 }
 /* 댓글 style 끝 */
+
+/* page-navigator */
+ul.page-navigator {
+  display: flex;
+  flex-direction: row;
+  gap: 0.625rem;
+  justify-content: center;
+  margin: 0.625rem 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+ul.page-navigator > li.active > a {
+  color: #f00;
+}
