@@ -53,7 +53,7 @@ public class BoardController {
 		int searchCount = searchResult.getCount();
 		model.addAttribute("searchResult", list);
 		model.addAttribute("searchCount", searchCount);
-		model.addAttribute("pagenation",searchListVO);
+		model.addAttribute("pagination",searchListVO);
 		
 		return "board/list";
 	}

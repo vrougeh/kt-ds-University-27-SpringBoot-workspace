@@ -171,7 +171,7 @@ public class SearchListVO {
 	 * 
 	 * @param articleCount 게시글의 개수
 	 */
-	public void computePagenation(int articleCount) {
+	public void computePagination(int articleCount) {
 		// 페이지 개수 계산
 		this.pageCount = (int) Math.ceil(articleCount / (double) this.listSize);
 

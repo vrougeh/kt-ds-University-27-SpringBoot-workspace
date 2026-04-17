@@ -46,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
 		int count = this.boardDao.selectBoardCount(searchListVO);
 		
 		// 몇개의 페이지가 필요한지 계산
-		searchListVO.computePagenation(count);
+		searchListVO.computePagination(count);
 
 		// 게시글 목록조회
 		List<BoardVO> list = this.boardDao.selectBoardList(searchListVO);
