@@ -7,8 +7,6 @@ import com.ktdsuniversity.edu.replies.vo.response.RecommendResultVO;
 import com.ktdsuniversity.edu.replies.vo.response.SearchResultVO;
 import com.ktdsuniversity.edu.replies.vo.response.UpdateResultVO;
 
-import jakarta.validation.Valid;
-
 
 public interface RepliesService {
 

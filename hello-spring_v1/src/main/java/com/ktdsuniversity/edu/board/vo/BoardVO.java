@@ -8,7 +8,7 @@ import com.ktdsuniversity.edu.members.vo.MembersVO;
 import jakarta.validation.constraints.Size;
 
 public class BoardVO {
-	
+
 	private String id;
 	@Size(min=3, message="3자이상 입력")
 	private String subject;
@@ -20,11 +20,11 @@ public class BoardVO {
 	private String fileName;
 	private String originFileName;
 	private String fileGroupId;
-	
+
 	private MembersVO membersVO;
-	
+
 	private List<FilesVO> files;
-	
+
 	public String getId() {
 		return this.id;
 	}
@@ -86,7 +86,7 @@ public class BoardVO {
 	public void setFileGroupId(String fileGroupId) {
 		this.fileGroupId = fileGroupId;
 	}
-	
+
 	public List<FilesVO> getFiles() {
 		return this.files;
 	}

@@ -5,11 +5,11 @@ import java.util.List;
 import com.ktdsuniversity.edu.members.vo.MembersVO;
 
 public class SearchResultVO {
-	
+
 	private List<MembersVO> result;
 	private int count;
-	
-	
+
+
 	public List<MembersVO> getResult() {
 		return this.result;
 	}

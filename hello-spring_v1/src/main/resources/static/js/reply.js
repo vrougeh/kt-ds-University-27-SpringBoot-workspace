@@ -140,7 +140,7 @@ $().ready(function () {
                 .find(".reply-update-attach-file")[0].files;
 
               var formData = new FormData();
-              formData.append("id", replyId);
+			  formData.append("_csrf",$("meta[name='_csrf']").attr("content"));
               formData.append("content", updateContent);
               deleteFilesNum.each(function () {
                 formData.append("delFileNum", $(this).val());
@@ -228,6 +228,7 @@ $().ready(function () {
     formData.append("reply", replyContent);
     formData.append("articleId", articleId);
     formData.append("parentReplyId", parentReplyId);
+	formData.append("_csrf",$("meta[name='_csrf']").attr("content"));
 
     if (files.files.length > 0) {
       for (var i = 0; i < files.files.length; i++) {

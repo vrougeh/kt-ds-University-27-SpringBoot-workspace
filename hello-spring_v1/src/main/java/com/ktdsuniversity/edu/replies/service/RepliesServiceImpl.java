@@ -9,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.common.utils.AuthUtils;
 import com.ktdsuniversity.edu.common.utils.ObjectUtils;
-import com.ktdsuniversity.edu.common.utils.SessionUtils;
 import com.ktdsuniversity.edu.exceptions.HelloSpringApiException;
 import com.ktdsuniversity.edu.files.dao.FilesDao;
 import com.ktdsuniversity.edu.files.utils.MultipartFileHandler;
@@ -71,21 +70,29 @@ public class RepliesServiceImpl implements RepliesService {
 	@Transactional
 	@Override
 	public RecommendResultVO updateRecommendReplyByReplyId(String replyId) {
-		
+
 		RepliesVO reply = this.repliesDao.selectReplyByReplyId(replyId);
 		if (ObjectUtils.isNotNull(reply)) {
-			if (SessionUtils.isMineResource(reply.getEmail())) {
+			//Spring Security의 SecurityContext 객체에 접근해서 Authentication객체를 가지고온다
+			String loginEmail = AuthUtils.getUsername();
+			boolean isAdminAccount = AuthUtils.hasAnyRole("RL-20260418-000001", "RL-20260418-000002");
+			if (loginEmail.equals(reply.getEmail())) {
 				throw new HelloSpringApiException(
-						"권한이 부족합니다.", 
-						HttpStatus.BAD_REQUEST.value(), 
+						"권한이 부족합니다.",
+						HttpStatus.BAD_REQUEST.value(),
 						"자신의 댓글은 추천할 수 없습니다.");
+			} else if(isAdminAccount) {
+				throw new HelloSpringApiException(
+						"권한이 부족합니다.",
+						HttpStatus.BAD_REQUEST.value(),
+						"관리자는 추천할 수 없습니다.");
 			}
 		}
-		
+
 		int updateCount = this.repliesDao.updateReplyRecommendByReplyId(replyId);
 		if (updateCount == 1) {
 			reply = this.repliesDao.selectReplyByReplyId(replyId);
-			
+
 			RecommendResultVO result = new RecommendResultVO();
 			result.setReplyId(replyId);
 			result.setRecommendCount(reply.getRecommendCnt());
@@ -115,13 +122,19 @@ public class RepliesServiceImpl implements RepliesService {
 	public UpdateResultVO updateReply(UpdateVO updateVO) {
 		RepliesVO reply = this.repliesDao.selectReplyByReplyId(updateVO.getReplyId());
 		if (ObjectUtils.isNotNull(reply)) {
-			if (!SessionUtils.isMineResource(reply.getEmail())) {
-				throw new HelloSpringApiException("파라미터가 충분하지 않습니다.", HttpStatus.BAD_REQUEST.value(), "자신의 댓글이 아닙니다.");
+			String logUserEmail = AuthUtils.getUsername();
+			boolean isAdminAccount = AuthUtils.hasAnyRole("RL-20260418-000001", "RL-20260418-000002");
+			//관리자가 아니고 내가 작성한댓글도 아니라면 수정할 수 없다.
+			if (!isAdminAccount && !logUserEmail.equals(reply.getEmail())) {
+				throw new HelloSpringApiException(
+						"권한이 부족합니다.",
+						HttpStatus.BAD_REQUEST.value(),
+						"자신의 댓글이 아닙니다.");
 			}
 		}
-		
+
 		updateVO.setFileGroupId(reply.getFileGroupId());
-		
+
 		// 선택한 파일들만 삭제한다.
 		if (updateVO.getDelFileNum() != null && updateVO.getDelFileNum().size() > 0) {
 			// 선택한 파일들의 정보를 조회 --> 파일경로 > 실제파일 제거
@@ -135,9 +148,9 @@ public class RepliesServiceImpl implements RepliesService {
 			// 선택한 파일들을 FILES 테이블에서 제거
 			int deleteCount = this.filesDao.deleteFilesByFileGroupIdAndFileNums(searchFilesGroupVO);
 			logger.debug("삭제한 파일 데디터의 수 : {}", deleteCount);
-		
+
 		}
-		
+
 		List<MultipartFile> attachFiles = updateVO.getNewAttachFiles();
 		String fileGroupId = updateVO.getFileGroupId();
 		if (fileGroupId == null || fileGroupId.length() == 0) {
@@ -146,13 +159,13 @@ public class RepliesServiceImpl implements RepliesService {
 		} else {
 			this.multipartFileHandler.upload(attachFiles, updateVO.getFileGroupId());
 		}
-		
+
 		int updateCount = this.repliesDao.updateReplyByReplyId(updateVO);
-		
+
 		UpdateResultVO result = new UpdateResultVO();
 		result.setReplyId(updateVO.getReplyId());
 		result.setUpdate(updateCount == 1);
-		
+
 		return result;
 	}
 }

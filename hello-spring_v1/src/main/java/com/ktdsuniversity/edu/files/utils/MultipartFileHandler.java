@@ -16,26 +16,26 @@ import com.ktdsuniversity.edu.files.vo.request.UploadVO;
 
 @Component
 public class MultipartFileHandler {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(MultipartFileHandler.class);
-	
+
 	@Autowired
 	private FilesDao filesDao;
-	
+
 	public String upload(List<MultipartFile> attachFiles, String fileGroupId) {
 		if(attachFiles != null && attachFiles.size() > 0) {
 			logger.debug("파일 개수 {}", attachFiles.size());
 //			System.out.println("파일 개수" + attachFiles.size());
-			
+
 //			for(MultipartFile uploadedFile : attachFiles) {
-			for(int i = 0 ; i < attachFiles.size() ; i++) {
-				
+			for (MultipartFile attachFile : attachFiles) {
+
 				//업로드를 하지 않았는데 했다고 판단한 경우에는 다음 반복으로 넘어가라
-				if(attachFiles.get(i).isEmpty()) {
+				if(attachFile.isEmpty()) {
 					continue;
 				}
-				
-				
+
+
 				String obfuscateName = UUID.randomUUID().toString();
 				//업로드한 파일이 서버컴퓨터의 파일시스템에 저장되도록 한다.
 				File storeFile = new File("C:\\uploadFiles",obfuscateName);
@@ -44,10 +44,10 @@ public class MultipartFileHandler {
 					storeFile.getParentFile().mkdirs();
 				}
 				try {
-					attachFiles.get(i).transferTo(storeFile);
+					attachFile.transferTo(storeFile);
 					//files 테이블에 첨부파일 데이터 insert
 					UploadVO uploadVO = new UploadVO();
-					String filename = attachFiles.get(i).getOriginalFilename();
+					String filename = attachFile.getOriginalFilename();
 					String ext = filename.substring(filename.lastIndexOf(".")+1);
 					uploadVO.setFileGroupId(fileGroupId);
 					uploadVO.setObfuscateName(obfuscateName);
@@ -71,21 +71,21 @@ public class MultipartFileHandler {
 	 * @return 첨부파일의 그룹 아이디
 	 */
 	public String upload(List<MultipartFile> attachFiles) {
-		
+
 		if(attachFiles != null && attachFiles.size() > 0) {
 			logger.debug("파일 개수 {}", attachFiles.size());
 //			System.out.println("파일 개수" + attachFiles.size());
-			
+
 			String fileGroupId = this.filesDao.selectNewFileGroupId();
 			this.filesDao.insertFileGroupId(fileGroupId);
-			
+
 			this.upload(attachFiles, fileGroupId);
-		
+
 			return fileGroupId;
 		}
 		return null;
 	}
-	
-	
+
+
 
 }

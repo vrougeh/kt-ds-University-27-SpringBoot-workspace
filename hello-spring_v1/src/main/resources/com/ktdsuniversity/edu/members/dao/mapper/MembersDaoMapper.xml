@@ -39,7 +39,7 @@ SELECT EMAIL
   FROM SPRING_BOOT.MEMBERS
 </select>
 
-<select id="selectMembersByEmail" resultType="com.ktdsuniversity.edu.members.vo.MembersVO" parameterType="string">
+<select id="selectMemberByEmail" resultType="com.ktdsuniversity.edu.members.vo.MembersVO" parameterType="string">
 SELECT EMAIL
      , NAME
      , PASSWORD
@@ -100,6 +100,15 @@ UPDATE MEMBERS
 SELECT LOGIN_DATE
   FROM MEMBERS
  WHERE EMAIL = #{email}
+</select>
+
+<select id="selectMemberRolesByEmail" parameterType="string" resultType="string">
+ SELECT ROLE_ID
+   FROM ROLES
+  START WITH ROLE_ID = (SELECT ROLE_ID
+                          FROM MEMBERS
+                         WHERE EMAIL = #{_parameter}) 
+CONNECT BY PRIOR ROLE_ID = TOP_ROLE_ID 
 </select>
 
 </mapper>

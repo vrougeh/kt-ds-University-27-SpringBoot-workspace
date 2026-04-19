@@ -17,8 +17,6 @@ public interface MembersDao {
 
 	List<MembersVO> selectMembersList();
 
-	MembersVO selectMembersByEmail(String email);
-
 	int deleteMembersByEmail(String email);
 
 	int updateMembersByEmail(RegistVO writeVO);
@@ -30,5 +28,9 @@ public interface MembersDao {
 	int updateSuccessLogin(LoginVO loginVO);
 
 	String selectLoginDateByEmail(String email);
+
+	MembersVO selectMemberByEmail(String username);
+
+	List<String> selectMemberRolesByEmail(String username);
 
 }

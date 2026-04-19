@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class NoEndPointController implements ErrorController{
-	
+
 	@GetMapping("/error")
 	public String viewNotFoundPage(Model model) {
 		model.addAttribute("errorMessage", "존재하지 않는 URL 입니다.");

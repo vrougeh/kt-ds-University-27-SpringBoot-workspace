@@ -3,7 +3,7 @@ package com.ktdsuniversity.edu.board.vo.request;
 import java.util.List;
 
 public class UpdateVO extends WriteVO {
-	
+
 	private List<Integer> deleteFileNum;
 
 	public List<Integer> getDeleteFileNum() {
@@ -14,5 +14,5 @@ public class UpdateVO extends WriteVO {
 		this.deleteFileNum = deleteFileNum;
 	}
 
-	
+
 }

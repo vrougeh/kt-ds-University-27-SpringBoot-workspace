@@ -5,19 +5,21 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ktdsuniversity.edu.common.utils.AuthUtils;
 import com.ktdsuniversity.edu.exceptions.HelloSpringApiException;
 import com.ktdsuniversity.edu.exceptions.HelloSpringException;
 
 /**
  * Spring Application에서 던져진 catch되지 않은 예외들을 처리하는 클래스
- * 
+ *
  * @Controller와 유사한 형태 - url이 endpoint
- * 
+ *
  * @ControllerAdvice - Exception이 endpoint
  */
 @ControllerAdvice
@@ -25,9 +27,23 @@ public class GlobalExceptionHandler {
 
 	private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+
+	@ExceptionHandler(AuthorizationDeniedException.class)
+	public String viewLoginPage(Model model) {
+		//로그인 했는지 안했는지 확인
+		boolean isAuthenticated =AuthUtils.isAuthenticated();
+		logger.debug("isAuthenticated  :  {}",isAuthenticated );
+		if(isAuthenticated) {
+			model.addAttribute("errorMessage","잘못된 접근입니다. 권한이 충분하지 않습니다");
+			return "errors/403";
+		}
+		//로그인이 안됐을 때
+		return "forward:/login";
+	}
+
 	/**
 	 * HelloSpringException이 던져지면 viewErrorPage가 실행된다 실행된 결과는 ModelAndView가 괸다
-	 * 
+	 *
 	 * @return 사용자에게 보여줄 템플릿의 이름
 	 */
 	@ExceptionHandler(HelloSpringException.class)

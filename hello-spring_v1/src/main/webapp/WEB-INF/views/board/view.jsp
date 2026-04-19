@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <jsp:include page="/WEB-INF/views/templates/header.jsp">
 	<jsp:param value="게시글 조회 : ${article.id}" name="title" />
 	<jsp:param
@@ -93,10 +94,16 @@
 
 	<div class="btn-group">
 		<div class="right-align">
-			<c:if test="${article.email eq sessionScope.__LOGIN_DATA__.email }">
-				<a href="/update/${article.id}">수정</a>
-				<a href="/delete?id=${article.id}">삭제</a>
-			</c:if>
+        	<sec:authorize
+				access="hasAnyRole('RL-20260414-000001', 'RL-20260414-000002')"
+				var="isAdmin" />
+			<sec:authorize access="isAuthenticated()">
+				<sec:authentication property="principal.email" var="loginUserEmail" />
+				<c:if test="${isAdmin or loginUserEmail eq article.email}">
+					<a href="/update/${article.id}">수정</a>
+					<a href="/delete?id=${article.id}">삭제</a>
+				</c:if>
+			</sec:authorize>
 		</div>
 	</div>
 </div>

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CalculateController {
-	
+
 	/**
 	 * 엔드포인트 = /calc
 	 * 반환시키는 탬플릿 이름 = calc.jsp
@@ -16,7 +16,7 @@ public class CalculateController {
 	 *   2. secondNum
 	 *   3. result = firstNum + secondNum 의 결과
 	 */
-	
+
 	@GetMapping("/calc")
 	public String viewCalcPage(Model model){
 		model.addAttribute("firstNum", 1);
@@ -24,7 +24,7 @@ public class CalculateController {
 		model.addAttribute("result", 1+2);
 		return "calcjsp";
 	}
-	
+
 	/**
 	 * <pre>
 	 * Browser에서 Endpoint 로 파라미터를 보내는 3가지 방법
@@ -51,7 +51,7 @@ public class CalculateController {
 	 *      => HTTP Header 정보 취득가능 요청자(브라우저)의 IP 취득가능
 	 *           => Endpoint를 호출한 위치(Referrer) 취득가능
 	 *   2. @RequestParam을 이용하는 방법 (종종 사용됨 - 파라미터의 개수가 적을 때 - 2개 이하)
-	 *      => Query String Parameter, Form Parameter 
+	 *      => Query String Parameter, Form Parameter
 	 *   3. @ModelAttribute 를 이용하는 방법 ( 가장많이 사용됨 - 파라미터의 개수가 많을 때)
 	 *      => Command Object, @ModelAttribute Annotation은 생략가능
 	 *      => Query String Parameter, Form Parameter
@@ -59,14 +59,14 @@ public class CalculateController {
 	 *      => Request Body 취득
 	 *   -. @PathVariable 를 이용하는 방법 (가장많이 사용됨 - Path(URL) Variable 취득)
 	 * </pre>
-	 * 
+	 *
 	 * @return
 	 */
 	//calc2?f=1&s=3
 	@GetMapping("/calc2")
 	public String viewParamCalcPage(Model model,@RequestParam(required=false, defaultValue="0") int f, @RequestParam(required=false, defaultValue="0") int s) {
 		int result = f + s;
-		
+
 		model.addAttribute("firstNum", f);
 		model.addAttribute("secondNum", s);
 		model.addAttribute("result", result);

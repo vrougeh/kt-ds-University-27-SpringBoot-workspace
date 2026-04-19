@@ -18,3 +18,9 @@ spring:
 mybatis:
   config-location: classpath:mybatis-config.xml #설정 파일 위치 지정
   mapper-locations: classpath:com/ktdsuniversity/edu/**/mapper/*Mapper.xml
+
+# Spring 이외의 Custom 설정
+app:
+  jwt:
+    issuer: hello-spring_v1                                
+    secret-key: qwepuon2134GXChj2rhsandpasdfasdfasdfasdfasd

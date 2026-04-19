@@ -10,15 +10,15 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 
 public class DownLoadVO {
-	
+
 	private String displayName;
 	private String extendName;
 	private long fileLength;
 	private String filePath;
-	
+
 	//사용자에게 전달해줄 파일객체
 	private File file;
-	
+
 	//브라우저에게 전달하기 위한 파일 객체
 	private Resource resource;
 
@@ -78,5 +78,5 @@ public class DownLoadVO {
 	public Resource getResource() {
 		return this.resource;
 	}
-	
+
 }

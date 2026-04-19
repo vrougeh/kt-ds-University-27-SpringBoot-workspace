@@ -1,14 +1,14 @@
 package com.ktdsuniversity.edu.files.vo.request;
 
 public class UploadVO {
-	
+
 	private String fileGroupId;
 	private String obfuscateName;
 	private String displayName;
 	private String extendName;
 	private long fileLength;
 	private String filePath;
-	
+
 	public String getFileGroupId() {
 		return this.fileGroupId;
 	}
@@ -45,7 +45,7 @@ public class UploadVO {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	
-	
+
+
 
 }

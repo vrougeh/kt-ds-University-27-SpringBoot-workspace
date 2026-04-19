@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +14,14 @@ import com.ktdsuniversity.edu.exceptions.HelloSpringException;
 import com.ktdsuniversity.edu.members.dao.MembersDao;
 import com.ktdsuniversity.edu.members.helpers.SHA256Util;
 import com.ktdsuniversity.edu.members.vo.MembersVO;
-import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.members.vo.request.LoginVO;
 import com.ktdsuniversity.edu.members.vo.request.RegistVO;
+import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.members.vo.response.SearchResultVO;
-
 @Service
 public class MembersServiceImpl implements MembersService {
+
+	private static final Logger logger = LoggerFactory.getLogger(MembersServiceImpl.class);
 
 	@Autowired
 	private MembersDao membersDao;
@@ -27,7 +30,7 @@ public class MembersServiceImpl implements MembersService {
 	@Override
 	public boolean createNewMembers(RegistVO registVO) {
 
-		MembersVO membersVO = this.membersDao.selectMembersByEmail(registVO.getEmail());
+		MembersVO membersVO = this.membersDao.selectMemberByEmail(registVO.getEmail());
 		if (membersVO != null) {
 			throw new HelloSpringException("이미 사용중인 이메일 입니다.", "members/regist", registVO);
 		}
@@ -59,7 +62,7 @@ public class MembersServiceImpl implements MembersService {
 
 	@Override
 	public MembersVO findMembersByEmail(String email) {
-		MembersVO user = this.membersDao.selectMembersByEmail(email);
+		MembersVO user = this.membersDao.selectMemberByEmail(email);
 		return user;
 	}
 
@@ -89,7 +92,7 @@ public class MembersServiceImpl implements MembersService {
 	public MembersVO findMemberByEmailAndPassword(LoginVO loginVO) {
 
 		// email을 이용해 회원 정보 조회하기(selectMemberByEmail)
-		MembersVO searchResult = this.membersDao.selectMembersByEmail(loginVO.getEmail());
+		MembersVO searchResult = this.membersDao.selectMemberByEmail(loginVO.getEmail());
 		// 조회된 결과가 없다면 이메일 또는 비밀번호가 잘못되었습니다 예외 던지기 - IllegalArgumentsException
 		if (searchResult == null) {
 			throw new HelloSpringException("이메일 또는 비밀번호가 잘못되었습니다", "members/login", loginVO);
@@ -128,6 +131,10 @@ public class MembersServiceImpl implements MembersService {
 
 			throw new HelloSpringException("이메일 또는 비밀번호가 잘못되었습니다", "members/login", loginVO);
 		}
+		logger.debug("비밀번호 : {}, salt : {}", userpassword, usersalt);
+
+		logger.debug("DAO 호출 전 이메일: " + loginVO.getEmail());
+		logger.debug("DAO 호출 전 IP: " + loginVO.getIp());
 		// 로그인 성공 처리
 		// 1. login_fail_count를 0으로 초기화
 		// 2. latest_login_ip를 현제 아이피로 변경

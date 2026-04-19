@@ -3,12 +3,12 @@ package com.ktdsuniversity.edu.members.vo.request;
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginVO {
-	
+
 	@NotBlank(message = "email을 입력해주세요")
 	private String email;
 	@NotBlank(message = "password를 입력해주세요")
 	private String password;
-	
+
 	private String ip;
 
 	public String getEmail() {
@@ -34,7 +34,7 @@ public class LoginVO {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	
-	
+
+
 
 }

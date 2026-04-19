@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 /**
@@ -15,17 +14,17 @@ import jakarta.validation.constraints.NotEmpty;
  * setter를 이용
  */
 public class WriteVO {
-	
+
 	private String id;
-	
+
 	@NotEmpty(message = "제목은 반드시 입력해주세요.")
 	private String subject;
 	private String content;
 	private String email;
 	private String fileGroupId;
-	
-	
-	
+
+
+
 	public String getFileGroupId() {
 		return this.fileGroupId;
 	}
@@ -35,8 +34,8 @@ public class WriteVO {
 	}
 
 	private List<MultipartFile> attachFile;
-	
-	
+
+
 	public String getId() {
 		return this.id;
 	}
@@ -44,27 +43,27 @@ public class WriteVO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getSubject() {
 		return this.subject;
 	}
-	
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
+
 	public String getContent() {
 		return this.content;
 	}
-	
+
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public String getEmail() {
 		return this.email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}

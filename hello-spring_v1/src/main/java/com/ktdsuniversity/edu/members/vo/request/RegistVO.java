@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class RegistVO {
-	
+
 	@Email(message = "이메일 형태가 아닙니다.")
 	@NotBlank(message = "이메일 형태가 아닙니다.")
 	private String email;
@@ -17,9 +17,9 @@ public class RegistVO {
 	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
 	       , message = "비밀번호는 영소문자, 영대문자, 숫자 최소 1개를 포함하여 8글자 이상으로 입력하세요")
 	private String password;
-	
+
 	private String salt;
-	
+
 	public String getSalt() {
 		return this.salt;
 	}

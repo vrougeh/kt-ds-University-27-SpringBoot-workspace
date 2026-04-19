@@ -3,9 +3,9 @@ package com.ktdsuniversity.edu.exceptions;
 public class HelloSpringException extends RuntimeException {
 
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 5344517791626726005L;
+	private static final long serialVersionUID = 7521205000176695374L;
 
 	/**
 	 * 에러가 발생했을 때 사용자에게 보여주고 싶은 페이지(템플릿,뷰)의 이름

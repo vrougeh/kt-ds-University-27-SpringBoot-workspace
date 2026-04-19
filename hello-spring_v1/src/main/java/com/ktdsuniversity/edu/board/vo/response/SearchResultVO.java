@@ -10,11 +10,11 @@ import com.ktdsuniversity.edu.board.vo.BoardVO;
  * 게시글 개수
  */
 public class SearchResultVO {
-	
+
 	private List<BoardVO> result;
 	private int count;
-	
-	
+
+
 	public List<BoardVO> getResult() {
 		return this.result;
 	}
@@ -27,7 +27,7 @@ public class SearchResultVO {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	
-	
+
+
 
 }

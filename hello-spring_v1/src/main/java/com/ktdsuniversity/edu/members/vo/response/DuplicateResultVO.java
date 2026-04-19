@@ -1,10 +1,10 @@
 package com.ktdsuniversity.edu.members.vo.response;
 
 public class DuplicateResultVO {
-	
+
 	private String email;
 	private boolean duplicate;
-	
+
 	public String getEmail() {
 		return this.email;
 	}
@@ -17,7 +17,7 @@ public class DuplicateResultVO {
 	public void setDuplicate(boolean duplicate) {
 		this.duplicate = duplicate;
 	}
-	
-	
+
+
 
 }

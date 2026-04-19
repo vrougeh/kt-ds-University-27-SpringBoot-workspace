@@ -17,7 +17,7 @@ public interface BoardDao {
 	List<BoardVO> selectBoardList(SearchListVO searchListVO);
 
 	int insertNewBoard(WriteVO writeVO);
-	
+
 	BoardVO selectBoardById(String articleId);
 
 	int updateViewCntIncreaseById(String articleId);

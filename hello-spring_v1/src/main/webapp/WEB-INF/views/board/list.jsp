@@ -86,7 +86,7 @@
 					href="javascript:void(-1)">이전</a></li>
 			</c:if>
 			<c:forEach begin="${pagination.groupStartPageNo }"
-				end="${pagination.groupEndPageNo -1}" step="1" var="page">
+				end="${pagination.groupEndPageNo > 0 ? pagination.groupEndPageNo - 1 : 0}" step="1" var="page">
 				<li class="${page eq pagination.pageNo ? 'active': '' }"><a
 					data-page-no="${page}" href="javascript:void(-1)">${page + 1}</a></li>
 			</c:forEach>
