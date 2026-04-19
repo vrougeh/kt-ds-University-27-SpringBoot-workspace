@@ -24,7 +24,6 @@ import com.ktdsuniversity.edu.members.vo.request.UpdateVO;
 import com.ktdsuniversity.edu.members.vo.response.DuplicateResultVO;
 import com.ktdsuniversity.edu.members.vo.response.SearchResultVO;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 
@@ -166,14 +165,13 @@ public class MembersController {
 
 	@PreAuthorize(value = "isAuthenticated()")
 	@GetMapping("/logout")
-	public String viewLogoutPage(HttpSession session) {
-		session.invalidate();
+	public String viewLogoutPage() {
 		return "members/login";
 	}
 
 	@PreAuthorize(value = "isAuthenticated() and #id == authentication.principal.email")
 	@GetMapping("/delete-me")
-	public String doDeleteAction(HttpSession session, Authentication authentication) {
+	public String doDeleteAction(Authentication authentication) {
 
 		if(authentication.getAuthorities() == null) {
 			return "redirect:/";
@@ -185,7 +183,6 @@ public class MembersController {
 		boolean delete = this.membersService.deleteMembersByEmail(memberEmail);
 		if(delete) {
 			//현재로그인된 사용자를 로그아웃 시킨다
-			session.invalidate();
 			//"members/deletesuccess" 페이지를 보여준다.
 			return "members/deletesuccess";
 			//"탈퇴가 완료됐습니다."
