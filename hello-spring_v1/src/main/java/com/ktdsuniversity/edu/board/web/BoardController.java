@@ -126,7 +126,7 @@ public class BoardController {
 
 	@PreAuthorize(value = "isAuthenticated()")
 	@GetMapping("/update/{articleId}")
-	public String viewUpdatePage(@PathVariable String articleId, Model model, @SessionAttribute("__LOGIN_DATA__") MembersVO loginMember) {
+	public String viewUpdatePage(@PathVariable String articleId, Model model) {
 		BoardVO data = this.boardService.findBoardByArticleId(articleId, ReadType.UPDATE);
 
 		model.addAttribute("article",data);
