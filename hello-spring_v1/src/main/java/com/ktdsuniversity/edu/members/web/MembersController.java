@@ -90,7 +90,7 @@ public class MembersController {
 	}
 
 	//본인의 정보만 조회
-	@PreAuthorize(value = "isAuthenticated() and #id == authentication.principal.email")
+	@PreAuthorize(value = "isAuthenticated() and #email == authentication.principal.email")
 	@GetMapping("/member/view/{email}")
 	public String viewUserPage(Model model, @PathVariable String email) {
 
@@ -99,7 +99,7 @@ public class MembersController {
 		return "members/view";
 	}
 	//본인의 정보만 조회
-	@PreAuthorize(value = "isAuthenticated() and #id == authentication.principal.email")
+	@PreAuthorize(value = "isAuthenticated() and #email == authentication.principal.email")
 	@GetMapping("member/update/{email}")
 	public String viewUpdatePage(@PathVariable String email, Model model) {
 		MembersVO data = this.membersService.findMembersByEmail(email);
@@ -108,7 +108,7 @@ public class MembersController {
 	}
 
 	//본인의 정보만 조회
-	@PreAuthorize(value = "isAuthenticated() and #id == authentication.principal.email")
+	@PreAuthorize(value = "isAuthenticated() and #email == authentication.principal.email")
 	@PostMapping("member/update/{email}")
 	public String doUpdateAction(@PathVariable String email, UpdateVO updateVO) {
 		updateVO.setEmail(email);
@@ -117,7 +117,7 @@ public class MembersController {
 		return "redirect:/member/view/"+email;
 	}
 	//본인의 정보만 조회
-	@PreAuthorize(value = "isAuthenticated() and #id == authentication.principal.email")
+	@PreAuthorize(value = "isAuthenticated() and #email == authentication.principal.email")
 	@GetMapping("/member/delete")
 	public String doDeleteAction(@RequestParam String email) {
 		boolean deleteResult = this.membersService.deleteMembersByEmail(email);
@@ -169,7 +169,7 @@ public class MembersController {
 		return "members/login";
 	}
 
-	@PreAuthorize(value = "isAuthenticated() and #id == authentication.principal.email")
+	@PreAuthorize(value = "isAuthenticated() and #email == authentication.principal.email")
 	@GetMapping("/delete-me")
 	public String doDeleteAction(Authentication authentication) {
 

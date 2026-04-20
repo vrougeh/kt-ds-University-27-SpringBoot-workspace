@@ -2,10 +2,10 @@
 <configuration scan="true" scanPeriod="30 seconds">
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${user.home}\DevPrograms\log\hello-spring\hello-spring.log</file>
+    <file>${user.home}\DevPrograms\log\hello-spring_v1\hello-spring.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <!-- daily rollover -->
-      <fileNamePattern>${user.home}\DevPrograms\log\hello-spring\hello-spring.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <fileNamePattern>${user.home}\DevPrograms\log\hello-spring_v1\hello-spring.%d{yyyy-MM-dd}.log</fileNamePattern>
     </rollingPolicy>
 
     <encoder>

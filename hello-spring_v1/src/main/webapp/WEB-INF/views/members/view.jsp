@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/templates/header.jsp">
-<jsp:param value="게시글 조회 ${user.email}"  name="title"/>
+<jsp:param value="회원 정보 조회 ${user.email}"  name="title"/>
 </jsp:include>
         <h1>회원 조회</h1>
         <div class="grid view">
